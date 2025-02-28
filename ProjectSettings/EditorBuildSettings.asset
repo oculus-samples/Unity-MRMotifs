@@ -6,25 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_MRMotifs/MRMotifsHome.unity
+    path: Assets/MRMotifs/MRMotifsHome.unity
     guid: cbae9f7d29ae56649b9b96f04193ad89
   - enabled: 1
-    path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderUnderlay.unity
+    path: Assets/MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderUnderlay.unity
     guid: c439005c7779b504eb4ddab2b5fc7697
   - enabled: 1
-    path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderSelective.unity
+    path: Assets/MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderSelective.unity
     guid: 363c627f547d14a42b49676510598eff
   - enabled: 1
-    path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderSlider.unity
+    path: Assets/MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderSlider.unity
     guid: 54bfdb8f613415b499ba62dd59ac97fd
   - enabled: 1
-    path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderDissolve.unity
+    path: Assets/MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderDissolve.unity
     guid: 04d3df86ffb21854da9450263eea9bb2
   - enabled: 1
-    path: Assets/_MRMotifs/SharedActivities/Scenes/Chess.unity
+    path: Assets/MRMotifs/SharedActivities/Scenes/Chess.unity
     guid: 805ba54878fed5b46adcecbe0dea32aa
   - enabled: 1
-    path: Assets/_MRMotifs/SharedActivities/Scenes/MovieCowatching.unity
+    path: Assets/MRMotifs/SharedActivities/Scenes/MovieCowatching.unity
     guid: 14ef1d0bc5d0217429ee1e3502233221
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 76cb85526c074c8458be822a82877922, type: 2}
