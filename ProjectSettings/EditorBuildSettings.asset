@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderUnderlay.unity
     guid: c439005c7779b504eb4ddab2b5fc7697
   - enabled: 1
-    path: Assets/_MRMotifs/PassthroughTransitioning/_Samples/Scenes/PassthroughFaderSelective.unity
+    path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderSelective.unity
     guid: 363c627f547d14a42b49676510598eff
   - enabled: 1
     path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderSlider.unity
     guid: 54bfdb8f613415b499ba62dd59ac97fd
   - enabled: 1
-    path: Assets/_MRMotifs/PassthroughTransitioning/_Samples/Scenes/PassthroughFaderDissolve.unity
+    path: Assets/_MRMotifs/PassthroughTransitioning/Scenes/PassthroughFaderDissolve.unity
     guid: 04d3df86ffb21854da9450263eea9bb2
   - enabled: 1
     path: Assets/_MRMotifs/SharedActivities/Scenes/Chess.unity

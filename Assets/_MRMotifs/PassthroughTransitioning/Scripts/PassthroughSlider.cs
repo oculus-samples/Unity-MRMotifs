@@ -21,7 +21,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PassthroughFaderSlider : MonoBehaviour
+public class PassthroughSlider : MonoBehaviour
 {
     [Tooltip("The passthrough layer used for the fade effect.")]
     [SerializeField] private OVRPassthroughLayer oVRPassthroughLayer;

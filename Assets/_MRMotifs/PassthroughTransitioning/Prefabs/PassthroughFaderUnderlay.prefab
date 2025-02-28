@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3772499826509522906}
   - component: {fileID: 6245266965018901611}
   - component: {fileID: 2427447416820275467}
-  - component: {fileID: 8469733720678579855}
+  - component: {fileID: 3874252852142584725}
   - component: {fileID: 3868283373540618447}
   m_Layer: 0
   m_Name: PassthroughFaderUnderlay
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8469733720678579855
+--- !u!114 &3874252852142584725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,12 +94,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2690679059899142552}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21efec6c338959b45b0d70e56e5f4c98, type: 3}
+  m_Script: {fileID: 11500000, guid: e0b1e78e7d8d31a4f9fbc1862d9d952d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   oVRPassthroughLayer: {fileID: 0}
   passthroughViewingMode: 0
-  selectiveDistance: 0.01
+  selectiveDistance: 5
   fadeSpeed: 1
   fadeDirection: 2
   onStartFadeIn:
