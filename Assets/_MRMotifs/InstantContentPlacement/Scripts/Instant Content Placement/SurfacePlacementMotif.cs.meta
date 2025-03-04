@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9ebae8c63d0c3d44d8adb1fc45b96a93
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - placementIndicatorPrefab: {fileID: 6960644575348141528, guid: e6d06c566a8d8ad45b932a2eec49567d,
+      type: 3}
+  - interactableUnityEventWrapper: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

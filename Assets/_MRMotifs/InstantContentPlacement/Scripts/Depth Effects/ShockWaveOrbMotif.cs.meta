@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: bd58ac0f57450f34688d6732d4cccbad
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - stickAudio: {fileID: 8300000, guid: 8227120f2cd101048b1e7a6a15530ad0, type: 3}
+  - spawnAudio: {fileID: 8300000, guid: e667bb93cf88eeb458ea601e8ed5a9fc, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
