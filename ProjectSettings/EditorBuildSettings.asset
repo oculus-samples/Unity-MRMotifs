@@ -26,7 +26,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MRMotifs/SharedActivities/Scenes/MovieCowatching.unity
     guid: 14ef1d0bc5d0217429ee1e3502233221
+  - enabled: 1
+    path: Assets/MRMotifs/InstantContentPlacement/Scenes/DepthEffects.unity
+    guid: 8d1c4dd34e4b68243898ee4d067493e5
+  - enabled: 1
+    path: Assets/MRMotifs/InstantContentPlacement/Scenes/InstantContentPlacement.unity
+    guid: 94e5d96fe23133a4c88c19940426946a
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 76cb85526c074c8458be822a82877922, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 164d77ef9199b154685194b5e1feab47, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 7f28826bad7acd54ab6b68aa6fc1277f, type: 2}
+  m_UseUCBPForAssetBundles: 0
