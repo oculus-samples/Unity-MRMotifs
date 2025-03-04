@@ -1,22 +1,4 @@
-/*
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- * All rights reserved.
- *
- * Licensed under the Oculus SDK License Agreement (the "License");
- * you may not use the Oculus SDK except in compliance with the License,
- * which is provided at the time of installation or download, or which
- * otherwise accompanies this software in either electronic or hard copy form.
- *
- * You may obtain a copy of the License at
- *
- * https://developer.oculus.com/licenses/oculussdk/
- *
- * Unless required by applicable law or agreed to in writing, the Oculus SDK
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright (c) Meta Platforms, Inc. and affiliates.
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,68 +6,72 @@ using Oculus.Platform;
 using Oculus.Platform.BuildingBlocks;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// The InvitationAcceptanceHandlerMotif class handles deep link invitations using the Oculus Platform SDK.
-/// When the application is launched via a deep link (e.g., an invitation from a friend), it checks the launch
-/// details to determine if the user should be directed to a specific destination.
-/// </summary>
-public class InvitationAcceptanceHandlerMotif : MonoBehaviour
+namespace MRMotifs.SharedActivities.QuestPlatform
 {
-    [SerializeField] private EntitlementCheck entitlementCheck;
-
-    [Header("Destination API Names and their Scenes")]
-    [Tooltip("A list of API to Scene mappings.")]
-    [SerializeField] private List<ApiToSceneMapping> apiToSceneMappings = new();
-
-    private Dictionary<string, string> _apiToSceneMap;
-
-    private void Awake()
+    /// <summary>
+    /// The InvitationAcceptanceHandlerMotif class handles deep link invitations using the Oculus Platform SDK.
+    /// When the application is launched via a deep link (e.g., an invitation from a friend), it checks the launch
+    /// details to determine if the user should be directed to a specific destination.
+    /// </summary>
+    public class InvitationAcceptanceHandlerMotif : MonoBehaviour
     {
-        entitlementCheck.UserPassedEntitlementCheck += HandleDeepLinkInvitation;
-        InitializeApiToSceneMap();
-    }
+        [SerializeField] private EntitlementCheck entitlementCheck;
 
-    private void InitializeApiToSceneMap()
-    {
-        _apiToSceneMap = new Dictionary<string, string>();
+        [Header("Destination API Names and their Scenes")]
+        [Tooltip("A list of API to Scene mappings.")]
+        [SerializeField]
+        private List<ApiToSceneMapping> apiToSceneMappings = new();
 
-        foreach (var mapping in apiToSceneMappings)
+        private Dictionary<string, string> m_apiToSceneMap;
+
+        private void Awake()
         {
-            if (!_apiToSceneMap.ContainsKey(mapping.apiName))
+            entitlementCheck.UserPassedEntitlementCheck += HandleDeepLinkInvitation;
+            InitializeApiToSceneMap();
+        }
+
+        private void InitializeApiToSceneMap()
+        {
+            m_apiToSceneMap = new Dictionary<string, string>();
+
+            foreach (var mapping in apiToSceneMappings)
             {
-                _apiToSceneMap.Add(mapping.apiName, mapping.sceneName);
+                if (!m_apiToSceneMap.ContainsKey(mapping.apiName))
+                {
+                    m_apiToSceneMap.Add(mapping.apiName, mapping.sceneName);
+                }
             }
         }
-    }
 
-    private void HandleDeepLinkInvitation()
-    {
-        var launchDetails = ApplicationLifecycle.GetLaunchDetails();
-        if (launchDetails.LaunchType == LaunchType.Deeplink)
+        private void HandleDeepLinkInvitation()
         {
-            Debug.Log("App was launched via a deep link invitation.");
-            var destinationApiName = launchDetails.DestinationApiName;
-
-            if (_apiToSceneMap.TryGetValue(destinationApiName, out var sceneName))
+            var launchDetails = ApplicationLifecycle.GetLaunchDetails();
+            if (launchDetails.LaunchType == LaunchType.Deeplink)
             {
-                SceneManager.LoadSceneAsync(sceneName);
-                Debug.Log($"Connecting to {sceneName} session automatically via Auto-matchmaking.");
+                Debug.Log("App was launched via a deep link invitation.");
+                var destinationApiName = launchDetails.DestinationApiName;
+
+                if (m_apiToSceneMap.TryGetValue(destinationApiName, out var sceneName))
+                {
+                    SceneManager.LoadSceneAsync(sceneName);
+                    Debug.Log($"Connecting to {sceneName} session automatically via Auto-matchmaking.");
+                }
+                else
+                {
+                    Debug.LogWarning("Unknown destination for deep link: " + destinationApiName);
+                }
             }
             else
             {
-                Debug.LogWarning("Unknown destination for deep link: " + destinationApiName);
+                Debug.Log("No deep link invitation detected.");
             }
         }
-        else
-        {
-            Debug.Log("No deep link invitation detected.");
-        }
     }
-}
 
-[System.Serializable]
-public class ApiToSceneMapping
-{
-    public string apiName;
-    public string sceneName;
+    [System.Serializable]
+    public class ApiToSceneMapping
+    {
+        public string apiName;
+        public string sceneName;
+    }
 }

@@ -1,64 +1,49 @@
-/*
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- * All rights reserved.
- *
- * Licensed under the Oculus SDK License Agreement (the "License");
- * you may not use the Oculus SDK except in compliance with the License,
- * which is provided at the time of installation or download, or which
- * otherwise accompanies this software in either electronic or hard copy form.
- *
- * You may obtain a copy of the License at
- *
- * https://developer.oculus.com/licenses/oculussdk/
- *
- * Unless required by applicable law or agreed to in writing, the Oculus SDK
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright (c) Meta Platforms, Inc. and affiliates.
 
 using UnityEngine;
 
-public class HomeScene : MonoBehaviour
+namespace MRMotifs.SharedAssets
 {
-    [SerializeField] private OVRPassthroughLayer oVRPassthroughLayer;
-
-    private Camera _mainCamera;
-    private Color _skyboxBackgroundColor;
-
-    private void Awake()
+    public class HomeScene : MonoBehaviour
     {
-        _mainCamera = Camera.main;
+        [SerializeField] private OVRPassthroughLayer oVRPassthroughLayer;
 
-        if (_mainCamera != null)
+        private Camera m_mainCamera;
+        private Color m_skyboxBackgroundColor;
+
+        private void Awake()
         {
-            _skyboxBackgroundColor = _mainCamera.backgroundColor;
-        }
+            m_mainCamera = Camera.main;
+
+            if (m_mainCamera != null)
+            {
+                m_skyboxBackgroundColor = m_mainCamera.backgroundColor;
+            }
 
 #if UNITY_ANDROID
         CheckIfPassthroughIsRecommended();
 #endif
-    }
-
-    private void CheckIfPassthroughIsRecommended()
-    {
-        if (_mainCamera == null)
-        {
-            return;
         }
 
-        if (OVRManager.IsPassthroughRecommended())
+        private void CheckIfPassthroughIsRecommended()
         {
-            oVRPassthroughLayer.enabled = true;
-            _mainCamera.clearFlags = CameraClearFlags.SolidColor;
-            _mainCamera.backgroundColor = Color.clear;
-        }
-        else
-        {
-            oVRPassthroughLayer.enabled = false;
-            _mainCamera.clearFlags = CameraClearFlags.Skybox;
-            _mainCamera.backgroundColor = _skyboxBackgroundColor;
+            if (m_mainCamera == null)
+            {
+                return;
+            }
+
+            if (OVRManager.IsPassthroughRecommended())
+            {
+                oVRPassthroughLayer.enabled = true;
+                m_mainCamera.clearFlags = CameraClearFlags.SolidColor;
+                m_mainCamera.backgroundColor = Color.clear;
+            }
+            else
+            {
+                oVRPassthroughLayer.enabled = false;
+                m_mainCamera.clearFlags = CameraClearFlags.Skybox;
+                m_mainCamera.backgroundColor = m_skyboxBackgroundColor;
+            }
         }
     }
 }
