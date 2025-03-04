@@ -1,107 +1,92 @@
-/************************************************************************************
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
-
-Licensed under the Oculus SDK License Agreement (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
-otherwise accompanies this software in either electronic or hard copy form.
-
-You may obtain a copy of the License at
-
-https://developer.oculus.com/licenses/oculussdk/
-
-Unless required by applicable law or agreed to in writing, the Oculus SDK
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-************************************************************************************/
+// Copyright (c) Meta Platforms, Inc. and affiliates.
 
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PassthroughDissolver : MonoBehaviour
+namespace MRMotifs.PassthroughTransitioning
 {
-    [Tooltip("The range of the passthrough dissolver sphere.")]
-    [SerializeField]
-    private float distance = 20f;
-
-    [Tooltip("The inverted alpha value at which the contextual boundary should be enabled/disabled.")]
-    [SerializeField]
-    private float boundaryThreshold = 0.25f;
-
-    private Camera _mainCamera;
-    private Material _material;
-    private MeshRenderer _meshRenderer;
-    private MenuPanel _menuPanel;
-    private Slider _alphaSlider;
-
-    private static readonly int DissolutionLevel = Shader.PropertyToID("_Level");
-
-    private void Awake()
+    public class PassthroughDissolver : MonoBehaviour
     {
-        _mainCamera = Camera.main;
-        if (_mainCamera != null)
+        [Tooltip("The range of the passthrough dissolver sphere.")]
+        [SerializeField]
+        private float distance = 20f;
+
+        [Tooltip("The inverted alpha value at which the contextual boundary should be enabled/disabled.")]
+        [SerializeField]
+        private float boundaryThreshold = 0.25f;
+
+        private Camera m_mainCamera;
+        private Material m_material;
+        private MeshRenderer m_meshRenderer;
+        private MenuPanel m_menuPanel;
+        private Slider m_alphaSlider;
+
+        private static readonly int s_dissolutionLevel = Shader.PropertyToID("_Level");
+
+        private void Awake()
         {
-            _mainCamera.clearFlags = CameraClearFlags.Skybox;
-        }
+            m_mainCamera = Camera.main;
+            if (m_mainCamera != null)
+            {
+                m_mainCamera.clearFlags = CameraClearFlags.Skybox;
+            }
 
-        // This is a property that determines whether premultiplied alpha blending is used for the eye field of view
-        // layer, which can be adjusted to enhance the blending with underlays and potentially improve visual quality.
-        OVRManager.eyeFovPremultipliedAlphaModeEnabled = false;
+            // This is a property that determines whether premultiplied alpha blending is used for the eye field of view
+            // layer, which can be adjusted to enhance the blending with underlays and potentially improve visual quality.
+            OVRManager.eyeFovPremultipliedAlphaModeEnabled = false;
 
-        _meshRenderer = GetComponent<MeshRenderer>();
-        _material = _meshRenderer.material;
-        _material.SetFloat(DissolutionLevel, 0);
-        _meshRenderer.enabled = true;
+            m_meshRenderer = GetComponent<MeshRenderer>();
+            m_material = m_meshRenderer.material;
+            m_material.SetFloat(s_dissolutionLevel, 0);
+            m_meshRenderer.enabled = true;
 
-        SetSphereSize(distance);
+            SetSphereSize(distance);
 
-        _menuPanel = FindAnyObjectByType<MenuPanel>();
+            m_menuPanel = FindAnyObjectByType<MenuPanel>();
 
-        if (_menuPanel != null)
-        {
-            _alphaSlider = _menuPanel.PassthroughFaderSlider;
-            _alphaSlider.onValueChanged.AddListener(HandleSliderChange);
-        }
+            if (m_menuPanel != null)
+            {
+                m_alphaSlider = m_menuPanel.PassthroughFaderSlider;
+                m_alphaSlider.onValueChanged.AddListener(HandleSliderChange);
+            }
 
 #if UNITY_ANDROID
-        CheckIfPassthroughIsRecommended();
+            CheckIfPassthroughIsRecommended();
 #endif
-    }
-
-    private void OnDestroy()
-    {
-        if (_menuPanel != null)
-        {
-            _alphaSlider.onValueChanged.RemoveListener(HandleSliderChange);
         }
-    }
 
-    private void SetSphereSize(float size)
-    {
-        transform.localScale = new Vector3(size, size, size);
-    }
-
-    private void CheckIfPassthroughIsRecommended()
-    {
-        _material.SetFloat(DissolutionLevel, OVRManager.IsPassthroughRecommended() ? 1 : 0);
-        OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = OVRManager.IsPassthroughRecommended();
-
-        if (_menuPanel != null)
+        private void OnDestroy()
         {
-            _alphaSlider.value = OVRManager.IsPassthroughRecommended() ? 1 : 0;
+            if (m_menuPanel != null)
+            {
+                m_alphaSlider.onValueChanged.RemoveListener(HandleSliderChange);
+            }
         }
-    }
 
-    private void HandleSliderChange(float value)
-    {
-        _material.SetFloat(DissolutionLevel, value);
-
-        if (value > boundaryThreshold || value < boundaryThreshold)
+        private void SetSphereSize(float size)
         {
-            OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = value > boundaryThreshold;
+            transform.localScale = new Vector3(size, size, size);
+        }
+
+        private void CheckIfPassthroughIsRecommended()
+        {
+            m_material.SetFloat(s_dissolutionLevel, OVRManager.IsPassthroughRecommended() ? 1 : 0);
+            OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = OVRManager.IsPassthroughRecommended();
+
+            if (m_menuPanel != null)
+            {
+                m_alphaSlider.value = OVRManager.IsPassthroughRecommended() ? 1 : 0;
+            }
+        }
+
+        private void HandleSliderChange(float value)
+        {
+            m_material.SetFloat(s_dissolutionLevel, value);
+
+            if (value > boundaryThreshold || value < boundaryThreshold)
+            {
+                OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = value > boundaryThreshold;
+            }
         }
     }
 }
