@@ -44,7 +44,7 @@ public class AvatarSpeakerHandlerMotif : NetworkBehaviour
     {
         while (!_avatarMovementHandlerMotif)
         {
-            _avatarMovementHandlerMotif = FindObjectOfType<AvatarMovementHandlerMotif>();
+            _avatarMovementHandlerMotif = FindAnyObjectByType<AvatarMovementHandlerMotif>();
             yield return null;
         }
 
@@ -68,7 +68,7 @@ public class AvatarSpeakerHandlerMotif : NetworkBehaviour
 
     private void AssignSpeakerToAvatar(AvatarBehaviourFusion remoteAvatar)
     {
-        var speakers = FindObjectsOfType<Speaker>();
+        var speakers = FindObjectsByType<Speaker>(FindObjectsSortMode.None);
         foreach (var speaker in speakers)
         {
             var networkObject = speaker.GetComponent<NetworkObject>();

@@ -63,7 +63,7 @@ public class GroupPresenceAndInviteHandlerMotif : MonoBehaviour
 
     private void SetupFriendsInvite()
     {
-        _inviteFriendsButton = FindObjectOfType<MenuPanel>().FriendsInviteButton;
+        _inviteFriendsButton = FindAnyObjectByType<MenuPanel>().FriendsInviteButton;
         _inviteFriendsButton.onClick.AddListener(OpenInvitePanel);
     }
 

@@ -66,7 +66,7 @@ public class AvatarMovementHandlerMotif : NetworkBehaviour
 
         HasSpawned = true;
         _networkRunner = Runner;
-        _spawnManagerMotif = FindObjectOfType<SpawnManagerMotif>();
+        _spawnManagerMotif = FindAnyObjectByType<SpawnManagerMotif>();
         _objectOfInterest = _spawnManagerMotif.ObjectOfInterest;
         _interactableUnityEventWrapper = _objectOfInterest.GetComponent<InteractableUnityEventWrapper>();
 
@@ -94,7 +94,7 @@ public class AvatarMovementHandlerMotif : NetworkBehaviour
 
     private void InitializeAvatars()
     {
-        var avatars = FindObjectsOfType<AvatarBehaviourFusion>();
+        var avatars = FindObjectsByType<AvatarBehaviourFusion>(FindObjectsSortMode.None);
         foreach (var avatar in avatars)
         {
             if (avatar.Object.HasStateAuthority)

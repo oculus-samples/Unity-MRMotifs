@@ -78,11 +78,11 @@ public class PassthroughSlider : MonoBehaviour
         SetSphereSize(selectiveDistance);
         SetFadeDirection((int)fadeDirection);
 
-        _menuPanel = FindObjectOfType<MenuPanel>();
+        _menuPanel = FindAnyObjectByType<MenuPanel>();
 
         if (_menuPanel != null)
         {
-            _alphaSlider = FindObjectOfType<MenuPanel>().PassthroughFaderSlider;
+            _alphaSlider = _menuPanel.PassthroughFaderSlider;
             _alphaSlider.onValueChanged.AddListener(HandleSliderChange);
         }
 

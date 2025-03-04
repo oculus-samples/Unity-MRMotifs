@@ -63,7 +63,7 @@ public class SurfacePlacementMotif : MonoBehaviour
         _trackedObject = transform;
         _trackedObjectRenderer = _trackedObject.GetComponent<Renderer>();
         _groundingShadow = GetComponent<GroundingShadowMotif>();
-        _raycastManager = FindObjectOfType<EnvironmentRaycastManager>();
+        _raycastManager = FindAnyObjectByType<EnvironmentRaycastManager>();
 
         if (_raycastManager == null)
         {

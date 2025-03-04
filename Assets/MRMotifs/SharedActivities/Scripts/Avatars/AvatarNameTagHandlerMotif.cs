@@ -44,7 +44,7 @@ public class AvatarNameTagHandlerMotif : NetworkBehaviour
     {
         while (!_avatarMovementHandlerMotif)
         {
-            _avatarMovementHandlerMotif = FindObjectOfType<AvatarMovementHandlerMotif>();
+            _avatarMovementHandlerMotif = FindAnyObjectByType<AvatarMovementHandlerMotif>();
             yield return null;
         }
 

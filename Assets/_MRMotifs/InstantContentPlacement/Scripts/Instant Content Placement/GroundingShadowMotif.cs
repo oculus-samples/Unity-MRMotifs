@@ -52,7 +52,7 @@ public class GroundingShadowMotif : MonoBehaviour
         _trackedObject = transform;
         _trackedObjectCollider = _trackedObject.GetComponent<Collider>();
 
-        _raycastManager = FindObjectOfType<EnvironmentRaycastManager>();
+        _raycastManager = FindAnyObjectByType<EnvironmentRaycastManager>();
         if (_raycastManager == null)
         {
             Debug.LogError("EnvironmentRaycastManager not found in the scene. Ensure it is added to the scene.");

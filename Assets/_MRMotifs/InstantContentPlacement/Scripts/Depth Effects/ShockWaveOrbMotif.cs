@@ -94,12 +94,12 @@ public class ShockWaveOrbMotif : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isLaunched || _rb.velocity.magnitude <= 0)
+        if (!_isLaunched || _rb.linearVelocity.magnitude <= 0)
         {
             return;
         }
 
-        var ray = new Ray(transform.position, _rb.velocity.normalized);
+        var ray = new Ray(transform.position, _rb.linearVelocity.normalized);
         if (_raycastManager.Raycast(ray, out var hit, maxDistance: proximityCheckValue)
             || hit.status == EnvironmentRaycastHitStatus.HitPointOccluded)
         {

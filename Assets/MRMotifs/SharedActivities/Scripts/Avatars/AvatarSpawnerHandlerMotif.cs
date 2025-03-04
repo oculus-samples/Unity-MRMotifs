@@ -92,7 +92,7 @@ public class AvatarSpawnerHandlerMotif : MonoBehaviour
 
             spawnManagerMotif.ReleaseLocationRpc(i, player);
 
-            var avatarHandler = FindObjectOfType<AvatarMovementHandlerMotif>();
+            var avatarHandler = FindAnyObjectByType<AvatarMovementHandlerMotif>();
             if (avatarHandler != null)
             {
                 avatarHandler.RemoveRemoteAvatarByPlayer(player);

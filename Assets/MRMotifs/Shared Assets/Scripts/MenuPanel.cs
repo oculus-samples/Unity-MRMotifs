@@ -102,7 +102,7 @@ public class MenuPanel : MonoBehaviour
     private void LoadScene(int sceneIndex)
     {
 #if FUSION2
-        var networkRunner = FindObjectOfType<NetworkRunner>();
+        var networkRunner = FindAnyObjectByType<NetworkRunner>();
         if (networkRunner != null && networkRunner.IsSceneAuthority)
         {
             Debug.LogError($"Unloading multiplayer scene with active NetworkRunner");
