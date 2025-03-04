@@ -89,6 +89,7 @@ imgui.ini
 
 **/Photon/
 **/TextMesh Pro/
+**/TextMesh Pro.meta
 Assets/Resources/OculusPlatformSettings.asset
 Assets/Resources/OVRPlatformToolSettings.asset
 ProjectSettings/QualitySettings.asset

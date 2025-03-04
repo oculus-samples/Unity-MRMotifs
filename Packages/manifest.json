@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.meta.xr.mrutilitykit": "71.0.0",
     "com.meta.xr.sdk.avatars": "31.0.0",
     "com.meta.xr.sdk.avatars.sample.assets": "31.0.0",
     "com.meta.xr.sdk.core": "71.0.0",
