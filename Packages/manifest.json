@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "com.meta.xr.mrutilitykit": "71.0.0",
+    "com.meta.xr.mrutilitykit": "72.0.0",
     "com.meta.xr.sdk.avatars": "31.0.0",
     "com.meta.xr.sdk.avatars.sample.assets": "31.0.0",
-    "com.meta.xr.sdk.core": "71.0.0",
-    "com.meta.xr.sdk.interaction.ovr": "71.0.0",
-    "com.meta.xr.sdk.platform": "71.0.0",
-    "com.meta.xr.simulator": "71.0.0",
+    "com.meta.xr.sdk.core": "72.0.0",
+    "com.meta.xr.sdk.interaction.ovr": "72.0.0",
+    "com.meta.xr.sdk.platform": "72.0.0",
+    "com.meta.xr.simulator": "72.0.0",
     "com.unity.feature.development": "1.0.2",
     "com.unity.multiplayer.center": "1.0.0",
     "com.unity.nuget.mono-cecil": "1.11.4",

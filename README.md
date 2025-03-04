@@ -10,11 +10,11 @@ Find more information in the [**`Developer Documentation`**](https://developers.
 
 # Requirements
 
-- [Unity 2022.3.38](https://unity.com/releases/editor/whats-new/2022.3.38) (Recommended) or later
+- [`Latest Unity Unity`](https://unity.com/releases/editor/whats-new/6000.0.40) (Recommended) or `Unity 2022.3 LTS`
 - URP (Recommended) or BiRP
-- [Meta XR Core SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-core-sdk-269169) (71.0.0) - com.meta.xr.sdk.core
-- [Meta XR Interaction SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-265014) (71.0.0) - com.meta.xr.sdk.interaction.ovr
-- [Meta XR Interaction SDK Essentials](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-essentials-264559) (71.0.0) - com.meta.xr.sdk.interaction
+- [Meta XR Core SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-core-sdk-269169) (`72.0.0`) - com.meta.xr.sdk.core
+- [Meta XR Interaction SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-265014) (`72.0.0`) - com.meta.xr.sdk.interaction.ovr
+- [Meta XR Interaction SDK Essentials](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-essentials-264559) (`72.0.0`) - com.meta.xr.sdk.interaction
 
 # MR Motifs Library
 
@@ -119,23 +119,22 @@ Create convincing shared activities in MR that encourage authentic, intuitive in
 
 ## Additional Requirements
 
-When using the **Shared Activities** MR Motif, there are several additional requirements that need to be met in order to use the full functionality of this sample. The Multiplayer Building Blocks provide integration with two popular multiplayer frameworks: [Unity Netcode for Game Objects](https://docs-multiplayer.unity3d.com/netcode/current/about/) and [Photon Fusion 2](https://doc.photonengine.com/fusion/current/fusion-intro).
+When using the **Shared Activities** MR Motif, there are several additional requirements that need to be met in order to use the full functionality of this sample. The Multiplayer Building Blocks provide integration with two popular multiplayer frameworks: [`Unity Netcode for Game Objects`](https://docs-multiplayer.unity3d.com/netcode/current/about/) and [`Photon Fusion 2`](https://doc.photonengine.com/fusion/current/fusion-intro).
 
-> [!NOTE]
-> Both multiplayer frameworks are supported at parity with the exception of the Player Voice Chat block that is only available for Photon Fusion, which is the main reason why **`this MR Motif will be based on Photon Fusion 2`**. The underlying concept of this sample should be easily transferable to Unity Netcode.
-- [Meta Avatars SDK](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-271958) (31.0.0) - com.meta.xr.sdk.avatars
-- [Meta Avatars SDK Sample Assets](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-sample-assets-272863) (31.0.0) - com.meta.xr.sdk.avatars.sample.assets
-  Required by Networked Avatar block to show a set of pre-set Meta Avatars in the editor when testing.
-- [Meta XR Platform SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-platform-sdk-262366) (71.0.0) - com.meta.xr.sdk.platform
-  Required by Player Name Tag and Networked Avatar blocks. Also required to retrieve data such as the player's avatar and name, as well as check the entitlement and connect to create group presence to use the friends invite feature.
-- [Meta XR Simulator](https://assetstore.unity.com/packages/tools/integration/meta-xr-simulator-266732) (71.0.0) - com.meta.xr.simulator
-  (Optional) For multiplayer testing without the need for many headsets.
-- [Photon Fusion](https://assetstore.unity.com/packages/tools/network/photon-fusion-267958) (2.0.3)
-- [Photon Voice](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (2.55)
-> [!NOTE]
+Both multiplayer frameworks are supported at parity with the exception of the Player Voice Chat block that is only available for Photon Fusion, which is the main reason why **`this MR Motif will be based on Photon Fusion 2`**. The underlying concept of this sample should be easily transferable to Unity Netcode.
+- [Meta Avatars SDK](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-271958) (`31.0.0`) - com.meta.xr.sdk.avatars
+- [Meta Avatars SDK Sample Assets](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-sample-assets-272863) (`31.0.0`) - com.meta.xr.sdk.avatars.sample.assets: Required by Networked Avatar block to show a set of pre-set Meta Avatars in the editor when testing.
+> [!CAUTION]
+> Building Blocks are currently not compatible with Avatars v33 or later. Avatars are not moving with the OVR Rig.
+- [Meta XR Platform SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-platform-sdk-262366) (`72.0.0`) - com.meta.xr.sdk.platform: Required by Player Name Tag and Networked Avatar blocks. Also required to retrieve data such as the player's avatar and name, as well as check the entitlement and connect to create group presence to use the friends invite feature.
+- [Meta XR Simulator](https://assetstore.unity.com/packages/tools/integration/meta-xr-simulator-266732) (`72.0.0`) - com.meta.xr.simulator
+  (Optional): For multiplayer testing without the need for many headsets.
+- [Photon Fusion](https://assetstore.unity.com/packages/tools/network/photon-fusion-267958) (`2.0.5`)
+- [Photon Voice](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (`2.57`)
+> [!TIP]
 > Make sure to go through the **[Import Photon Voice](https://doc.photonengine.com/voice/current/getting-started/voice-for-fusion)** setup guide.
-- [ParrelSync](https://github.com/VeriorPies/ParrelSync) (1.5.2)
-  (Optional) Creates and maintains multiple Unity editor instances of the same project for easier multiplayer testing.
+- [ParrelSync](https://github.com/VeriorPies/ParrelSync) (`1.5.2`)
+  (Optional): Creates and maintains multiple Unity editor instances of the same project for easier multiplayer testing.
 
 ## Shared Activities Sample Scenes
 
@@ -191,7 +190,9 @@ Version 71 of the Meta XR Core SDK introduced the **[MRUK Raycast API](https://d
 
 ### Additional Requirements
 
-- [**Meta MR Utility Kit**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450) (71.0.0) - com.meta.xr.mrutilitykit
+- [**Meta MR Utility Kit**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450) (`72.0.0`) - com.meta.xr.mrutilitykit
+> [!CAUTION]
+> With v72 there is currently a bug with Meta Link where starting a scene that contains the `EnvironmentDepthManager` will lead to a crash.
 
 ### How it works
 
