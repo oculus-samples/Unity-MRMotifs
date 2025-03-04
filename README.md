@@ -18,10 +18,11 @@ You can find even more tips and tricks on [how to design Mixed Reality experienc
 
 # MR Motifs Library
 
-1) [Passthrough Transitioning](#passthrough-transitioning) - Seamlessly fade between Passthrough and VR
-2) [Shared Activities in Mixed Reality](#shared-activities-in-mixed-reality) - Make people feel truly physically present with each other
+1. [Passthrough Transitioning](#passthrough-transitioning) - Seamlessly fade between Passthrough and VR
+2. [Shared Activities in Mixed Reality](#shared-activities-in-mixed-reality) - Make people feel truly physically present with each other
+3. [Instant Content Placement](#instant-content-placement--depth-effects) - Use the Depth API to create effects not possible otherwise
 
-> [!IMPORTANT]
+> [!NOTE]
 > All scenes can be loaded from the [MRMotifsHome](./Assets/_MRMotifs/MRMotifsHome.unity) scene which contains the Menu Panel [prefab](./Assets/_MRMotifs/_Shared/Prefabs/Menu%20Panel.prefab) and [script](./Assets/_MRMotifs/_Shared/Scripts/MenuPanel.cs), which holds a list of all the other scenes and which displays scene controls for each scene. The menu panel can be toggled by using the menu (start) button/gesture using hands and controllers. The menu panels are hidden in the Shared Activities scenes by default to not interfere with the object of interest.
 
 # Passthrough Transitioning
@@ -32,7 +33,7 @@ Make sure to read through our [**Developer Documentation**](https://developers.m
 
 With this Motif we would like to show the transition from fully immersive VR experiences, to passthrough mixed reality experiences, using the [Passthrough API](https://developer.oculus.com/documentation/unity/unity-passthrough/). We also want to address what passthrough is, and where and how it can and should be used. This project will allow users to adjust the visibility of their surroundings by manipulating a slider, which regulates the level of passthrough, or directly switch from one mode to another by the press of a button.
 
-> [!TIP]
+> [!NOTE]
 > This MR Motif also teaches how to use the [Boundary API](https://developer.oculus.com/documentation/unity/unity-boundaryless/), to disable the guardian while in passthrough mode for a seamless MR experience!
 
 ## How it works
@@ -45,12 +46,8 @@ Ensure an OVR Camera Rig with OVR Manager is set up with Passthrough enabled. En
 
 [Contextual passthrough](https://developers.meta.com/horizon/documentation/unity/unity-customize-passthrough-loading-screens/#configuring-system-splash-screen) determines if passthrough should be enabled based on the [system recommendation](https://developers.meta.com/horizon/documentation/unity/unity-passthrough-gs/#enable-based-on-system-recommendation). If the user is in passthrough mode at home, the system can detect this and display the splash screen and Unity scene in passthrough. In VR mode, the splash screen appears with a black background as usual.
 
-> [!IMPORTANT]
-> If Passthrough (Contextual) is enabled but the effect can still not be observed at startuo, make sure to update the AndroidManifest.xml. Go to Meta > Tools > Update the Android Manifest xml. Also, currently Passthrough (Contextual) for the system splash screen can only be enabled with a Unity Pro license.
-
-|                  Splash Screen (Black)                       |               Splash Screen (Passthrough Contextual)         |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![Black](./Media/Motif1/SplashScreenBlack.gif 'Black')       | ![PT](./Media/Motif1/SplashScreenPassthrough.gif 'PT')       |
+> [!TIP]
+> If Passthrough (Contextual) is enabled but the effect can still not be observed at startup, make sure to update the AndroidManifest.xml. Go to Meta > Tools > Update the Android Manifest xml. Also, currently Passthrough (Contextual) for the system splash screen can only be enabled with a Unity Pro license.
 
 ## Conditional Passthrough
 
@@ -126,45 +123,34 @@ When using the **Shared Activities** MR Motif, there are several additional requ
 
 > [!NOTE]
 > Both multiplayer frameworks are supported at parity with the exception of the Player Voice Chat block that is only available for Photon Fusion, which is the main reason why **this MR Motif will be based on Photon Fusion 2**. The underlying concept of this sample should be easily transferable to Unity Netcode.
-
 - [Meta Avatars SDK](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-271958) (31.0.0) - com.meta.xr.sdk.avatars
-
 - [Meta Avatars SDK Sample Assets](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-sample-assets-272863) (31.0.0) - com.meta.xr.sdk.avatars.sample.assets
-
   Required by Networked Avatar block to show a set of pre-set Meta Avatars in the editor when testing.
-
 - [Meta XR Platform SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-platform-sdk-262366) (71.0.0) - com.meta.xr.sdk.platform
-
   Required by Player Name Tag and Networked Avatar blocks. Also required to retrieve data such as the player's avatar and name, as well as check the entitlement and connect to create group presence to use the friends invite feature.
-
 - [Meta XR Simulator](https://assetstore.unity.com/packages/tools/integration/meta-xr-simulator-266732) (71.0.0) - com.meta.xr.simulator
-
   (Optional) For multiplayer testing without the need for many headsets.
-
 - [Photon Fusion](https://assetstore.unity.com/packages/tools/network/photon-fusion-267958) (2.0.3)
 - [Photon Voice](https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518) (2.55)
-
 > [!NOTE]
 > Make sure to go through the **[Import Photon Voice](https://doc.photonengine.com/voice/current/getting-started/voice-for-fusion)** setup guide.
-
 - [ParrelSync](https://github.com/VeriorPies/ParrelSync) (1.5.2)
-
   (Optional) Creates and maintains multiple Unity editor instances of the same project for easier multiplayer testing.
 
 ## Shared Activities Sample Scenes
 
-The [MRMotifsHome](./Assets/_MRMotifs/MRMotifsHome.unity) scene now includes "[MR Motif] Quest Platform Setup," containing an Entitlement Check (from Multiplayer Building Blocks) and **[InvitationAcceptanceHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Quest%20Platform/InvitationAcceptanceHandlerMotif.cs)**. This handles when a [friend is invited](https://developers.meta.com/horizon/documentation/unity/ps-invite-overview/) to your multiplayer scene, checks their entitlement, and determines the destination scene. It currently supports **chess** and **movie cowatching** but should be updated with your API and scene names. Create [destinations](https://developers.meta.com/horizon/documentation/unity/ps-destinations-overview) via the Developer Dashboard under Engagement > Destinations. Ensure the Data Use Check Up is set correctly by following [this section](#how-the-multiplayer-setup-works).
+The [`MRMotifsHome`](./Assets/_MRMotifs/MRMotifsHome.unity) scene now includes "[MR Motif] Quest Platform Setup," containing an Entitlement Check (from Multiplayer Building Blocks) and **[`InvitationAcceptanceHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Quest%20Platform/InvitationAcceptanceHandlerMotif.cs)**. This handles when a [friend is invited](https://developers.meta.com/horizon/documentation/unity/ps-invite-overview/) to your multiplayer scene, checks their entitlement, and determines the destination scene. It currently supports **chess** and **movie cowatching** but should be updated with your API and scene names. Create [destinations](https://developers.meta.com/horizon/documentation/unity/ps-destinations-overview) via the Developer Dashboard under Engagement > Destinations. Ensure the Data Use Check Up is set correctly by following [this section](#how-the-multiplayer-setup-works).
 
 |                        Chess Sample                          |                   Movie Cowatching Sample                    |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |          ![Chess](./Media/Motif2/Chess.gif 'Chess')          |         ![Movie](./Media/Motif2/Movie.gif 'Movie')           |
 
 
-The **chess sample** scene updates chess piece positions and rotations like the **[AvatarMovementHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs)**. The **[ChessBoardHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Chess%20Sample/ChessBoardHandlerMotif.cs)** assigns State Authority to players moving pieces and syncs their networked transforms. It toggles Rigidbody between physics (for the authority) and kinematic (for others). Using Photon Fusion's **IStateAuthorityChanged** interface, it waits for authority transfer before allowing movement. The board has four spawn points, which can be increased by adding more and assigning the **[SpawnPointMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnPointMotif.cs)** class.
+The **chess sample** scene updates chess piece positions and rotations like the **[`AvatarMovementHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs)**. The **[`ChessBoardHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Chess%20Sample/ChessBoardHandlerMotif.cs)** assigns State Authority to players moving pieces and syncs their networked transforms. It toggles Rigidbody between physics (for the authority) and kinematic (for others). Using Photon Fusion's **IStateAuthorityChanged** interface, it waits for authority transfer before allowing movement. The board has four spawn points, which can be increased by adding more and assigning the **[`SpawnPointMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnPointMotif.cs)** class.
 
 ![Spawn Locations](./Media/Motif2/SpawnLocations.png)
 
-The **movie cowatching** logic in **[MovieControlsHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Movie%20Sample/MovieControlsHandlerMotif.cs)** differs from the previous sample, as it synchronizes UI elements (button/toggle states) instead of transforms. It uses Networked Properties like NetworkBools and NetworkedFloats to track slider values and toggle states. The **IStateAuthorityChanged** interface ensures actions are executed by the correct player. Currently, there are 4 spawn locations set in front of the chess board.
+The **movie cowatching** logic in **[`MovieControlsHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Movie%20Sample/MovieControlsHandlerMotif.cs)** differs from the previous sample, as it synchronizes UI elements (button/toggle states) instead of transforms. It uses Networked Properties like NetworkBools and NetworkedFloats to track slider values and toggle states. The **IStateAuthorityChanged** interface ensures actions are executed by the correct player. Currently, there are 4 spawn locations set in front of the chess board.
 
 ## Multiplayer setup & troubleshooting
 
@@ -174,24 +160,89 @@ Find a detailed setup and troubleshooting guide in our [Developer Documentation]
 
 This MR Motif's [scripts folder](./Assets/_MRMotifs/SharedActivities/Scripts/) is subdivided into 5 folders, each hosting concise and easy-to-follow classes:
 - **Avatars**
-  - **[AvatarMovementHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs)**: Manages the synchronization of networked avatar positions and rotations. It childs the remote avatars to the object of interest to make them move with the object. The class ensures that both local and remote avatars are correctly positioned relative to a central "object of interest" by updating their transforms across clients whenever the object is moved or interacted with, maintaining consistency in the multiplayer environment.
-  - **[AvatarNameTagHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarNameTagHandlerMotif.cs)**: Manages the attachment of name tags to the heads of remote avatars. It waits for the avatars to be initialized and then dynamically parents the name tag to each avatar's head, ensuring that the name tags correctly follow the avatars' movements in the MR environment.
-  - **[AvatarSpawnerHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarSpawnerHandlerMotif.cs)**: Manages the spawning and positioning of avatars. It utilizes [SpawnManagerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs) to assign spawn locations, releases these locations when players exit, and optionally handles group presence features like friend invites for a more interactive multiplayer experience.
-  - **[AvatarSpeakerHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarSpeakerHandlerMotif.cs)**: Manages the assignment of voice speakers to remote avatars using Photon Voice. It waits for avatars to be initialized and then dynamically attaches a speaker component to each remote avatar's head, ensuring that voice is correctly positioned and synchronized with the avatars in the MR environment.
+  - **[`AvatarMovementHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs)**: Manages the synchronization of networked avatar positions and rotations. It childs the remote avatars to the object of interest to make them move with the object. The class ensures that both local and remote avatars are correctly positioned relative to a central "object of interest" by updating their transforms across clients whenever the object is moved or interacted with, maintaining consistency in the multiplayer environment.
+  - **[`AvatarNameTagHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarNameTagHandlerMotif.cs)**: Manages the attachment of name tags to the heads of remote avatars. It waits for the avatars to be initialized and then dynamically parents the name tag to each avatar's head, ensuring that the name tags correctly follow the avatars' movements in the MR environment.
+  - **[`AvatarSpawnerHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarSpawnerHandlerMotif.cs)**: Manages the spawning and positioning of avatars. It utilizes [`SpawnManagerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs) to assign spawn locations, releases these locations when players exit, and optionally handles group presence features like friend invites for a more interactive multiplayer experience.
+  - **[`AvatarSpeakerHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarSpeakerHandlerMotif.cs)**: Manages the assignment of voice speakers to remote avatars using Photon Voice. It waits for avatars to be initialized and then dynamically attaches a speaker component to each remote avatar's head, ensuring that voice is correctly positioned and synchronized with the avatars in the MR environment.
 - **Chess Sample**
-  - **[ChessBoardHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Chess%20Sample/ChessBoardHandlerMotif.cs)**: Manages the synchronization of networked chess piece positions and rotations very similarly to the [AvatarMovementHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs). It handles player interactions with the chess pieces such as selecting and moving them and updates their states across all clients, providing networked audio feedback to ensure consistent and interactive gameplay in a multiplayer environment. It also supports physics which is the reason why, as opposed to the [AvatarMovementHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs), we send updates of the positions and rotations every frame instead of only when the pieces are moved, to account for falling or moving pieces due to physics.
+  - **[`ChessBoardHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Chess%20Sample/ChessBoardHandlerMotif.cs)**: Manages the synchronization of networked chess piece positions and rotations very similarly to the [`AvatarMovementHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs). It handles player interactions with the chess pieces such as selecting and moving them and updates their states across all clients, providing networked audio feedback to ensure consistent and interactive gameplay in a multiplayer environment. It also supports physics which is the reason why, as opposed to the [`AvatarMovementHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs), we send updates of the positions and rotations every frame instead of only when the pieces are moved, to account for falling or moving pieces due to physics.
 - **Helpers**
-  - **[ConstraintInjectorMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Helpers/ConstraintInjectorMotif.cs)**: Dynamically injects rotation constraints into the GrabFreeTransformer component of a GameObject. It is used to limit the rotation of interactive objects like the chessboard and movie screen in sample scenes, ensuring they rotate only within specified bounds during user interaction.
-  - **[HandleAnimationMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Helpers/HandleAnimationMotif.cs)**: Controls the smooth scaling and transparency transitions of a GameObject during hover interactions. It listens for hover and unhover events using an InteractableUnityEventWrapper and employs coroutines to animate the object's scale and material alpha over a set duration, enhancing visual feedback during user interaction. This is used by the movie panel handle.
+  - **[`ConstraintInjectorMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Helpers/ConstraintInjectorMotif.cs)**: Dynamically injects rotation constraints into the GrabFreeTransformer component of a GameObject. It is used to limit the rotation of interactive objects like the chessboard and movie screen in sample scenes, ensuring they rotate only within specified bounds during user interaction.
+  - **[`HandleAnimationMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Helpers/HandleAnimationMotif.cs)**: Controls the smooth scaling and transparency transitions of a GameObject during hover interactions. It listens for hover and unhover events using an InteractableUnityEventWrapper and employs coroutines to animate the object's scale and material alpha over a set duration, enhancing visual feedback during user interaction. This is used by the movie panel handle.
 - **Movie Sample**
-  - **[MovieControlsHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Movie%20Sample/MovieControlsHandlerMotif.cs)**: Manages networked user interactions with a video player. It synchronizes playback controls like play/pause, volume, settings, and timeline adjustments across all connected clients, ensuring consistent video playback and UI states in a multiplayer environment.
+  - **[`MovieControlsHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Movie%20Sample/MovieControlsHandlerMotif.cs)**: Manages networked user interactions with a video player. It synchronizes playback controls like play/pause, volume, settings, and timeline adjustments across all connected clients, ensuring consistent video playback and UI states in a multiplayer environment.
 - **Quest Platform**
-  - **[GroupPresenceAndInviteHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Quest%20Platform/GroupPresenceAndInviteHandlerMotif.cs)**: Manages [group presence](https://developers.meta.com/horizon/documentation/unity/ps-group-presence-overview) and [friend invitations](https://developers.meta.com/horizon/documentation/unity/ps-invite-overview) using the Oculus Platform SDK. It allows users to set their session as joinable with specific destination and session IDs, and provides functionality to launch the invite panel so users can invite friends to join their multiplayer session.
-  - **[InvitationAcceptanceHandlerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Quest%20Platform/InvitationAcceptanceHandlerMotif.cs)**: Manages [deep link invitations](https://developers.meta.com/horizon/documentation/unity/ps-deep-linking/) using the Oculus Platform SDK. When the app is launched via a deep link (e.g., from a friend's invitation), it checks the launch details to map the provided destination API name to a scene and automatically loads that scene, directing the user to the appropriate multiplayer session.
+  - **[`GroupPresenceAndInviteHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Quest%20Platform/GroupPresenceAndInviteHandlerMotif.cs)**: Manages [group presence](https://developers.meta.com/horizon/documentation/unity/ps-group-presence-overview) and [friend invitations](https://developers.meta.com/horizon/documentation/unity/ps-invite-overview) using the Oculus Platform SDK. It allows users to set their session as joinable with specific destination and session IDs, and provides functionality to launch the invite panel so users can invite friends to join their multiplayer session.
+  - **[`InvitationAcceptanceHandlerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Quest%20Platform/InvitationAcceptanceHandlerMotif.cs)**: Manages [deep link invitations](https://developers.meta.com/horizon/documentation/unity/ps-deep-linking/) using the Oculus Platform SDK. When the app is launched via a deep link (e.g., from a friend's invitation), it checks the launch details to map the provided destination API name to a scene and automatically loads that scene, directing the user to the appropriate multiplayer session.
+
   ![Chess Testing](./Media/Motif2/InvitePanel.gif)
+
 - **Spawning**
-  - **[SpawnManagerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs)**: Manages player spawn locations. It controls a queuing system for players waiting for available spawn points, ensuring avatars are correctly positioned at these locations, and prevents conflicts by assigning unique spawn positions to each player as they join the session.
-  - **[SpawnPointMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnPointMotif.cs)**: Serves as a marker component in your scene to designate player spawn points. It is used by the [SpawnManagerMotif](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs) to identify and manage these spawn locations but contains no additional logic beyond being attached to GameObjects as an identifier.
+  - **[`SpawnManagerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs)**: Manages player spawn locations. It controls a queuing system for players waiting for available spawn points, ensuring avatars are correctly positioned at these locations, and prevents conflicts by assigning unique spawn positions to each player as they join the session.
+  - **[`SpawnPointMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnPointMotif.cs)**: Serves as a marker component in your scene to designate player spawn points. It is used by the [`SpawnManagerMotif`](./Assets/_MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs) to identify and manage these spawn locations but contains no additional logic beyond being attached to GameObjects as an identifier.
+
+## Instant Content Placement & Depth effects
+
+[![Video Thumbnail](./Media/Motif3/InstantContentPlacement.png)](https://www.youtube.com/watch?v=ZaW47wZJb0k)
+
+Version 71 of the Meta XR Core SDK introduced the **[MRUK Raycast API](https://developers.meta.com/horizon/documentation/unity/unity-mr-utility-kit-features#environment-raycasting-beta)** in public beta. It is designed for applications that want to place a 2D panel or 3D object somewhere in front of the user with minimal setup and effort required. This can be helpful when placing a board game on a table or sticking a UI panel to a wall, for example. The requirements for this placement are minimal: The user should simply look in the direction of the placement. This enables the users to put on a headset in a room they’ve never been to before, and immediately start interacting with both 2D and 3D content.
+
+### Additional Requirements
+
+- [**Meta MR Utility Kit**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450) (71.0.0) - com.meta.xr.mrutilitykit
+
+### How it works
+
+To place an object in a room, there is no need for colliders at all, instead the new [`EnvironmentRaycastManager`](https://developers.meta.com/horizon/documentation/unity/unity-mr-utility-kit-features#environment-raycasting-beta) is utilized, which heavily relies on the `EnvironmentDepthManager`. The basic concept of placing an object using the EnvironmentRaycastManager looks like the following:
+
+   ```
+   EnvironmentRaycastManager.Raycast(new Ray(origin, direction), out var hitInfo)
+   ```
+
+   Therefore, the most simple bare bones instant placement logic could look something like this:
+
+   ```
+  using Meta.XR.MRUtilityKit;
+  using UnityEngine;
+
+  public class BasicInstantPlacement : MonoBehaviour
+  {
+      public Transform Object;
+      public EnvironmentRaycastManager RaycastManager;
+
+      void Update()
+      {
+          // Check if we hit a surface below our object
+          if (RaycastManager.Raycast(new Ray(Object.position, Vector3.down), out var hitInfo))
+          {
+              // Position the object on the hitpoint/detected surface
+              Object.position = hitInfo.point;
+          }
+      }
+  }
+   ```
+
+   The important part here is the `EnvironmentRaycastManager.Raycast` method. It performs a raycast against the environment and returns a hit result with information such as the hit point, normal of the surface we hit, and normal confidence. This is already all the information needed to detect a surface and place any object on that surface. The Raycast API, part of MRUK, is as easy to work with as Unity’s [`Physics.Raycast`](https://docs.unity3d.com/ScriptReference/Physics.Raycast.html), which most Unity developers will already be familiar with.
+
+### Sample Scenes
+
+Two samples scene come with this MR Motif. The Depth Effects scene shows off various visual effects that can be achieved by utilizing the information coming form the EnvironmentDepthManager directly in our shaders. The Instant Content Placement scene shows you how to use Raycasting to detetct and place surfaces. We also added a separate shader to render a shadow below your object and cut it off whenever it extends a surface, such as a table, just like a real shadow.
+|                        Depth Effects                           |                   Instant Content Placement                     |
+| :----------------------------------------------------------:   | :----------------------------------------------------------:    |
+|          ![Orb Shockwave](./Media/Motif3/OrbWave.gif)          |     ![Grounding Shadow](./Media/Motif3/GroundingShadow.gif)     |
+
+### Custom Shaders
+
+This MR Motif includes several sample shaders designed to assist developers in quickly creating custom occlusion shaders. For example, the [`DepthLookingGlassMotif`](./Assets/_MRMotifs/InstantContentPlacement/Shaders/DepthLookingGlassMotif.shader) shader visualizes depth maps on objects such as quads, displaying both physical and virtual object depth to enhance gameplay interactions. To visualize virtual objects accurately, ensure they use opaque shaders, as transparent objects do not write to Unity's depth buffer. To achieve invisible objects that still affect depth, the [`DepthMaskMotif`](./Assets/_MRMotifs/InstantContentPlacement/Shaders/DepthMaskMotif.shader) shader can be applied. Additionally, for virtual depth visualization, depth textures must be enabled in the camera's rendering settings or the Universal Render Pipeline asset.
+
+![Looking Glass](./Media/Motif3/LookingGlass.gif)
+
+The Depth Effects scene demonstrates two additional visual effects. The [`DepthRelightingMotif`](./Assets/_MRMotifs/InstantContentPlacement/Shaders/DepthRelightingMotif.shader) shader applies a glow or lighting effect directly to the depth map, shown by the blue glow of the orb moving through the environment. The [`DepthScanEffectMotif`](./Assets/_MRMotifs/InstantContentPlacement/Shaders/DepthScanEffectMotif.shader) shader is applied to an invisible sphere, expanding over time and coloring intersections with the depth map to produce a shockwave effect. The image below illustrates the ShaderGraph implementation of the Orb, providing an example of how occlusion can be integrated into existing shaders. Additional details are available in the [`Depth API GitHub repository`](https://github.com/oculus-samples/Unity-DepthAPI).
+
+![Shadergraph Orb](./Media/Motif3/ShaderGraph_Orb.png)
+
+Lastly, we have provided you with the [`GroundingShadowMotif`](./Assets/_MRMotifs/InstantContentPlacement/Shaders/GroundingShadowMotif.shader) shader which displays a shadow texture and is able to compare virtual and physical depth, to discard the pixels of the texture, wherever the shadow extends over a surface, such as a table.
+
 
 # Health and safety guidelines
 
