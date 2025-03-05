@@ -10,7 +10,7 @@ Find more information in the [**`Developer Documentation`**](https://developers.
 
 # Requirements
 
-- [`Latest Unity Unity`](https://unity.com/releases/editor/whats-new/6000.0.40) (Recommended) or `Unity 2022.3 LTS`
+- [`Latest Unity version`](https://unity.com/releases/editor/whats-new/6000.0.40) (Recommended) or `Unity 2022.3 LTS`
 - URP (Recommended) or BiRP
 - [Meta XR Core SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-core-sdk-269169) (`72.0.0`) - com.meta.xr.sdk.core
 - [Meta XR Interaction SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-265014) (`72.0.0`) - com.meta.xr.sdk.interaction.ovr
@@ -182,7 +182,7 @@ This MR Motif's [scripts folder](./Assets/MRMotifs/SharedActivities/Scripts/) is
 
 ## Instant Content Placement & Depth effects
 
-![Video Thumbnail](./Media/Motif3/InstantContentPlacement.png)
+[![Video Thumbnail](./Media/Motif3/InstantContentPlacement.png)](https://www.youtube.com/watch?v=VEdtonM5pGs)
 
 Read through the [**Developer Documentation**](https://developers.meta.com/horizon/documentation/unity/unity-mrmotifs-instant-content-placement) for additional information!
 
