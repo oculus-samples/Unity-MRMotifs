@@ -274,7 +274,7 @@ dotnet_diagnostic.IDE0072.severity = none
 
 # Use file header
 dotnet_diagnostic.IDE0073.severity = warning
-# file_header_template
+file_header_template = Copyright (c) Meta Platforms, Inc. and affiliates.
 
 # Use coalesce compound assignment
 dotnet_diagnostic.IDE0074.severity = warning

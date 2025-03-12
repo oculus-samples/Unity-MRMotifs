@@ -290,9 +290,6 @@ may also distract the user from their surroundings.
 # License
 
 This codebase is available as both a reference and a template for mixed reality
-projects. The [Meta License](./LICENSE) applies to the SDK and supporting
-material. The MIT License applies to only certain, clearly marked documents. If
-an individual file does not indicate which license it is subject to, then the
-Oculus License applies.
+projects. MR Motif is licensed under [MIT LICENSE](./LICENSE).
 
 See the [CONTRIBUTING](./CONTRIBUTING.md) file for how to help out.
