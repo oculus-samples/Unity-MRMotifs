@@ -5,6 +5,7 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using Meta.XR.MultiplayerBlocks.Fusion;
+using Meta.XR.Samples;
 using UnityEngine;
 using Photon.Voice.Unity;
 
@@ -13,6 +14,7 @@ namespace MRMotifs.SharedActivities.Avatars
     /// <summary>
     /// Handles attaching speakers to remote avatars by matching state authority and retrying unassigned speakers after a delay.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class AvatarSpeakerHandlerMotif : NetworkBehaviour
     {
         private AvatarMovementHandlerMotif m_avatarMovementHandlerMotif;

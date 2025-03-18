@@ -1,6 +1,7 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
 using System.Collections;
+using Meta.XR.Samples;
 using UnityEngine;
 
 namespace MRMotifs.InstantContentPlacement.DepthEffects
@@ -8,6 +9,7 @@ namespace MRMotifs.InstantContentPlacement.DepthEffects
     /// <summary>
     /// Expands the scan wave effect over a set duration, then destroys the object.
     /// </summary>
+    [MetaCodeSample("MRMotifs-InstantContentPlacement")]
     public class ShockWaveEffectMotif : MonoBehaviour
     {
         [Header("Scan Wave Settings")]

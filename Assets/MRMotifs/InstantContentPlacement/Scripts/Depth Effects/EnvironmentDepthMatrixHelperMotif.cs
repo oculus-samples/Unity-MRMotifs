@@ -2,9 +2,11 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using Meta.XR.Samples;
 
 namespace MRMotifs.InstantContentPlacement.DepthEffects
 {
+    [MetaCodeSample("MRMotifs-InstantContentPlacement")]
     public class EnvironmentDepthMatrixHelperMotif : MonoBehaviour
     {
         private static readonly Matrix4x4[] s_envDepthDisplayInverseMatrices = new Matrix4x4[2];

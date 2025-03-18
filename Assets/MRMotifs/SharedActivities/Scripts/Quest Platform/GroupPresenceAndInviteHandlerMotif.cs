@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Oculus.Platform;
 using Meta.XR.MultiplayerBlocks.Fusion;
+using Meta.XR.Samples;
 using MRMotifs.SharedAssets;
 
 namespace MRMotifs.SharedActivities.QuestPlatform
@@ -15,6 +16,7 @@ namespace MRMotifs.SharedActivities.QuestPlatform
     /// and launching the invite panel using the Oculus Platform SDK. It allows users to set
     /// their presence in a joinable state and invite friends to join them in a multiplayer session.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class GroupPresenceAndInviteHandlerMotif : MonoBehaviour
     {
         [Tooltip("Decide if you would like to use the Group Presence features for your experience, such as invites.")]

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using Meta.XR;
+using Meta.XR.Samples;
 
 namespace MRMotifs.InstantContentPlacement.Placement
 {
@@ -9,6 +10,7 @@ namespace MRMotifs.InstantContentPlacement.Placement
     /// Projects a realistic shadow of a target object onto detected surfaces beneath it.
     /// The shadow adjusts its position, size, and opacity based on the target’s proximity to the surface.
     /// </summary>
+    [MetaCodeSample("MRMotifs-InstantContentPlacement")]
     public class GroundingShadowMotif : MonoBehaviour
     {
         [Tooltip("Prefab for the grounding shadow.")]

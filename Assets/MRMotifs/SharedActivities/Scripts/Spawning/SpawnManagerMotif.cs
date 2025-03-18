@@ -5,16 +5,17 @@ using Fusion;
 using UnityEngine;
 using System.Collections;
 using Meta.XR.MultiplayerBlocks.Fusion;
+using Meta.XR.Samples;
 using MRMotifs.SharedActivities.Avatars;
 
 namespace MRMotifs.SharedActivities.Spawning
 {
-
     /// <summary>
     /// Manages the spawn locations for players in a multiplayer session. Controls the
     /// queuing system for players waiting for an available spawn location and ensures
     /// avatars are placed correctly at available locations.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class SpawnManagerMotif : NetworkBehaviour
     {
         [Tooltip("Stores the PlayerRef of players occupying each spawn location.")]

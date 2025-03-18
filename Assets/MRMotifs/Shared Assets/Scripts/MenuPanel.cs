@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Oculus.Interaction;
 using System.Collections.Generic;
+using Meta.XR.Samples;
 using UnityEngine.SceneManagement;
 
 #if FUSION2
@@ -13,6 +14,7 @@ using Fusion;
 
 namespace MRMotifs.SharedAssets
 {
+    [MetaCodeSample("MRMotifs-SharedAssets")]
     public class MenuPanel : MonoBehaviour
     {
         [Header("MR Motifs - Library: Sample Scenes")]

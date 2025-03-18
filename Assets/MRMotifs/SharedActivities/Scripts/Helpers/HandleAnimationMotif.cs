@@ -1,6 +1,7 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
 using System.Collections;
+using Meta.XR.Samples;
 using Oculus.Interaction;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace MRMotifs.SharedActivities.Helpers
     /// <summary>
     /// Manages scaling and alpha transitions for an object over time, using a coroutine to animate the object smoothly.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class HandleAnimationMotif : MonoBehaviour
     {
         [Tooltip("Interactable Unity Event Wrapper to call the animation methods from.")]

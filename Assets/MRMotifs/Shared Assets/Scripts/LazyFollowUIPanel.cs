@@ -2,9 +2,11 @@
 
 using UnityEngine;
 using System.Collections;
+using Meta.XR.Samples;
 
 namespace MRMotifs.SharedAssets
 {
+    [MetaCodeSample("MRMotifs-SharedAssets")]
     public class LazyFollowUIPanel : MonoBehaviour
     {
         [Header("Panel Controls")]

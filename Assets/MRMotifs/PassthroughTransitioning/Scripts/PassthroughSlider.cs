@@ -1,11 +1,13 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
+using Meta.XR.Samples;
 using MRMotifs.SharedAssets;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MRMotifs.PassthroughTransitioning
 {
+    [MetaCodeSample("MRMotifs-PassthroughTransitioning")]
     public class PassthroughSlider : MonoBehaviour
     {
         [Tooltip("The passthrough layer used for the fade effect.")]

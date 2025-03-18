@@ -4,10 +4,12 @@ using Meta.XR;
 using static OVRInput;
 using System.Collections;
 using System.Collections.Generic;
+using Meta.XR.Samples;
 using UnityEngine;
 
 namespace MRMotifs.InstantContentPlacement.DepthEffects
 {
+    [MetaCodeSample("MRMotifs-InstantContentPlacement")]
     public class OrbSpawnerMotif : MonoBehaviour
     {
         [Tooltip("Handles environment raycasting for orbs placement.")]

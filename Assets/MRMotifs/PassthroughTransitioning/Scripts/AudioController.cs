@@ -1,9 +1,11 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
+using Meta.XR.Samples;
 using UnityEngine;
 
 namespace MRMotifs.PassthroughTransitioning
 {
+    [MetaCodeSample("MRMotifs-PassthroughTransitioning")]
     public class AudioController : MonoBehaviour
     {
         [Tooltip("GameObject that contains the renderer with the fader material and usually contains the fader logic.")]

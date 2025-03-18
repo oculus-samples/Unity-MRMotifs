@@ -1,9 +1,11 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
+using Meta.XR.Samples;
 using UnityEngine;
 
 namespace MRMotifs.SharedAssets
 {
+    [MetaCodeSample("MRMotifs-SharedAssets")]
     public class HomeScene : MonoBehaviour
     {
         [SerializeField] private OVRPassthroughLayer oVRPassthroughLayer;

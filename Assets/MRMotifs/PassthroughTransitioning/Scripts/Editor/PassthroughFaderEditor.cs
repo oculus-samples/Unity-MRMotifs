@@ -1,10 +1,13 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
+using Meta.XR.Samples;
+
 namespace MRMotifs.PassthroughTransitioning.Editor
 {
     using UnityEditor;
 
     [CustomEditor(typeof(PassthroughFaderEditor))]
+    [MetaCodeSample("MRMotifs-PassthroughTransitioning")]
     public class PassthroughFaderEditor : Editor
     {
         private SerializedProperty m_ovrPassthroughLayerProp;

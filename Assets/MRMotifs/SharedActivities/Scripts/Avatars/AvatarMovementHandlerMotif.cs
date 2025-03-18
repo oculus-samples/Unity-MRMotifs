@@ -9,6 +9,7 @@ using Oculus.Interaction;
 using System.Collections.Generic;
 using Meta.XR.MultiplayerBlocks.Fusion;
 using Meta.XR.MultiplayerBlocks.Shared;
+using Meta.XR.Samples;
 using MRMotifs.SharedActivities.Spawning;
 
 namespace MRMotifs.SharedActivities.Avatars
@@ -18,6 +19,7 @@ namespace MRMotifs.SharedActivities.Avatars
     /// Manages the interaction between avatars and the object of interest, ensuring avatars
     /// are correctly positioned relative to the object and updated whenever the object is moved.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class AvatarMovementHandlerMotif : NetworkBehaviour
     {
         /// <summary>

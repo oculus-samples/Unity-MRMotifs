@@ -6,6 +6,7 @@ using UnityEngine;
 using Oculus.Interaction;
 using System.Collections.Generic;
 using Meta.XR.MultiplayerBlocks.Fusion;
+using Meta.XR.Samples;
 
 namespace MRMotifs.SharedActivities.ChessSample
 {
@@ -13,6 +14,7 @@ namespace MRMotifs.SharedActivities.ChessSample
     /// Handles synchronization of chess piece positions and rotations across networked clients
     /// and manages interaction events for selecting and moving chess pieces.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class ChessBoardHandlerMotif : NetworkBehaviour, IStateAuthorityChanged
     {
         /// <summary>

@@ -1,11 +1,13 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
+using Meta.XR.Samples;
 using MRMotifs.SharedAssets;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MRMotifs.PassthroughTransitioning
 {
+    [MetaCodeSample("MRMotifs-PassthroughTransitioning")]
     public class PassthroughDissolver : MonoBehaviour
     {
         [Tooltip("The range of the passthrough dissolver sphere.")]

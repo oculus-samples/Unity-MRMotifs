@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using System.Collections;
+using Meta.XR.Samples;
 
 namespace MRMotifs.SharedActivities.MovieSample
 {
@@ -15,6 +16,7 @@ namespace MRMotifs.SharedActivities.MovieSample
     /// Handles user interactions with video player controls, such as play/pause, volume, settings, and timeline adjustments,
     /// and synchronizes these states across a networked multiplayer environment.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class MovieControlsHandlerMotif : NetworkBehaviour, IStateAuthorityChanged
     {
         /// <summary>

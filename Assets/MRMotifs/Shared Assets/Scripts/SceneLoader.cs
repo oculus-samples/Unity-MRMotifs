@@ -2,12 +2,14 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Meta.XR.Samples;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace MRMotifs.SharedAssets
 {
+    [MetaCodeSample("MRMotifs-SharedAssets")]
     public class SceneLoader : MonoBehaviour
     {
         [Tooltip("List of buttons that load scenes.")]

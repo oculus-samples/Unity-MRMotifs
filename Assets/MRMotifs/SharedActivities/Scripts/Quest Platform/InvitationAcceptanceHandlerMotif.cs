@@ -1,6 +1,7 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 
 using System.Collections.Generic;
+using Meta.XR.Samples;
 using UnityEngine;
 using Oculus.Platform;
 using Oculus.Platform.BuildingBlocks;
@@ -13,6 +14,7 @@ namespace MRMotifs.SharedActivities.QuestPlatform
     /// When the application is launched via a deep link (e.g., an invitation from a friend), it checks the launch
     /// details to determine if the user should be directed to a specific destination.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class InvitationAcceptanceHandlerMotif : MonoBehaviour
     {
         [SerializeField] private EntitlementCheck entitlementCheck;

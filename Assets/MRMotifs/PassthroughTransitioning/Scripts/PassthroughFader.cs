@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using Meta.XR.Samples;
 using MRMotifs.SharedAssets;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,7 @@ namespace MRMotifs.PassthroughTransitioning
     /// A unified passthrough fader that supports both Selective and Underlay modes.
     /// Select the mode in the inspector via the Passthrough Viewing Mode property.
     /// </summary>
+    [MetaCodeSample("MRMotifs-PassthroughTransitioning")]
     public class PassthroughFader : MonoBehaviour
     {
         /// <summary>

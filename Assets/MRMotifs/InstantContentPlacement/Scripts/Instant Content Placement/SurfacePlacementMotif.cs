@@ -4,6 +4,7 @@ using System.Collections;
 using Oculus.Interaction;
 using UnityEngine;
 using Meta.XR;
+using Meta.XR.Samples;
 
 namespace MRMotifs.InstantContentPlacement.Placement
 {
@@ -13,6 +14,7 @@ namespace MRMotifs.InstantContentPlacement.Placement
     /// and rotation towards the target surface if within a specified snap distance.
     /// Displays a placement indicator and line from the object to the surface while grabbed and in range.
     /// </summary>
+    [MetaCodeSample("MRMotifs-InstantContentPlacement")]
     public class SurfacePlacementMotif : MonoBehaviour
     {
         [Header("Interaction Settings")]

@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Meta.XR;
+using Meta.XR.Samples;
 
 namespace MRMotifs.InstantContentPlacement.DepthEffects
 {
@@ -13,6 +14,7 @@ namespace MRMotifs.InstantContentPlacement.DepthEffects
     /// When detonated, it invokes a UnityEvent to notify listeners of the event and destroys itself.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
+    [MetaCodeSample("MRMotifs-InstantContentPlacement")]
     public class ShockWaveOrbMotif : MonoBehaviour
     {
         [Header("Audio Feedback")]

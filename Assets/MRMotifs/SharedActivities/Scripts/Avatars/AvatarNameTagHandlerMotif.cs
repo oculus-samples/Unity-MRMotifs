@@ -5,6 +5,7 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using Meta.XR.MultiplayerBlocks.Fusion;
+using Meta.XR.Samples;
 using UnityEngine;
 
 namespace MRMotifs.SharedActivities.Avatars
@@ -12,6 +13,7 @@ namespace MRMotifs.SharedActivities.Avatars
     /// <summary>
     /// Handles attaching name tags to remote avatars by matching state authority and retrying unassigned tags after a delay.
     /// </summary>
+    [MetaCodeSample("MRMotifs-SharedActivities")]
     public class AvatarNameTagHandlerMotif : NetworkBehaviour
     {
         private AvatarMovementHandlerMotif m_avatarMovementHandlerMotif;
