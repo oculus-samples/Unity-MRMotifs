@@ -10,11 +10,15 @@ Find more information in the [**`Developer Documentation`**](https://developers.
 
 # Requirements
 
-- [`Latest Unity version`](https://unity.com/releases/editor/whats-new/6000.0.40) (Recommended) or `Unity 2022.3 LTS`
+- [Unity 6](https://unity.com/releases/editor/whats-new/6000.0.40) (Recommended) or `Unity 2022.3 LTS`
 - URP (Recommended) or BiRP
+- Oculus XR Plugin (`4.3.0`) - com.unity.xr.oculus
 - [Meta XR Core SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-core-sdk-269169) (`72.0.0`) - com.meta.xr.sdk.core
 - [Meta XR Interaction SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-265014) (`72.0.0`) - com.meta.xr.sdk.interaction.ovr
 - [Meta XR Interaction SDK Essentials](https://assetstore.unity.com/packages/tools/integration/meta-xr-interaction-sdk-essentials-264559) (`72.0.0`) - com.meta.xr.sdk.interaction
+
+> [!CAUTION]
+> If you plan to use the **OpenXR plugin**, be aware that the Avatar SDK does not yet support it. If you still would like to use the other MR Motif samples with **OpenXR**, make sure that, alongside the **OpenXR plugin**, you also install the Unity **OpenXR Meta plugin** (`com.unity.xr.meta-openxr@2.1.0-pre.1`), in order for the **Depth API** to work.
 
 # MR Motifs Library
 
@@ -33,8 +37,7 @@ Make sure to read through the [**Developer Documentation**](https://developers.m
 
 This Motif shows the transition from fully immersive VR experiences, to passthrough mixed reality experiences, using the [Passthrough API](https://developer.oculus.com/documentation/unity/unity-passthrough/). It also addresses what passthrough is, and where and how it can and should be used. This project will allow users to adjust the visibility of their surroundings by manipulating a slider, which regulates the level of passthrough, or directly switch from one mode to another by the press of a button.
 
-> [!NOTE]
-> This MR Motif also teaches how to use the [Boundary API](https://developer.oculus.com/documentation/unity/unity-boundaryless/), to disable the guardian while in passthrough mode for a seamless MR experience!
+This MR Motif also teaches how to use the [Boundary API](https://developer.oculus.com/documentation/unity/unity-boundaryless/), to disable the guardian while in passthrough mode for a seamless MR experience!
 
 ## How it works
 
@@ -123,6 +126,8 @@ When using the **Shared Activities** MR Motif, there are several additional requ
 
 Both multiplayer frameworks are supported at parity with the exception of the Player Voice Chat block that is only available for Photon Fusion, which is the main reason why **`this MR Motif will be based on Photon Fusion 2`**. The underlying concept of this sample should be easily transferable to Unity Netcode.
 - [Meta Avatars SDK](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-271958) (`31.0.0`) - com.meta.xr.sdk.avatars
+> [!CAUTION]
+> The Avatar SDK is currently not compatible yet with OpenXR. If you are planning to use this sample, you will need to keep using the Oculus XR Plugin.
 - [Meta Avatars SDK Sample Assets](https://assetstore.unity.com/packages/tools/integration/meta-avatars-sdk-sample-assets-272863) (`31.0.0`) - com.meta.xr.sdk.avatars.sample.assets: Required by Networked Avatar block to show a set of pre-set Meta Avatars in the editor when testing.
 > [!CAUTION]
 > Building Blocks are currently not compatible with Avatars v33 or later. Avatars are not moving with the OVR Rig.
@@ -191,8 +196,8 @@ Version 71 of the Meta XR Core SDK introduced the **[MRUK Raycast API](https://d
 ### Additional Requirements
 
 - [**Meta MR Utility Kit**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450) (`72.0.0`) - com.meta.xr.mrutilitykit
-> [!CAUTION]
-> With v72 there is currently a bug with Meta Link where starting a scene that contains the `EnvironmentDepthManager` will lead to a crash.
+> [!TIP]
+> This sample runs with OpenXR. Simplz makes sure that, alongside the **OpenXR plugin**, you also install the Unity **OpenXR Meta plugin** (`com.unity.xr.meta-openxr@2.1.0-pre.1`). This is necessary for using the Depth API.
 
 ### How it works
 
