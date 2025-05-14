@@ -25,6 +25,7 @@ Find more information in the [**`Developer Documentation`**](https://developers.
 1. [Passthrough Transitioning](#passthrough-transitioning) - Seamlessly fade between Passthrough and VR
 2. [Shared Activities in Mixed Reality](#shared-activities-in-mixed-reality) - Make people feel truly physically present with each other
 3. [Instant Content Placement](#instant-content-placement--depth-effects) - Use the Depth API to create effects not possible otherwise
+4. [Colocated Experiences]() - Seamlessly set up a colocated space for users to interact in
 
 > [!NOTE]
 > All scenes can be loaded from the [`MRMotifsHome`](./Assets/MRMotifs/MRMotifsHome.unity) scene which contains the `Menu Panel` [`prefab`](./Assets/MRMotifs/Shared%20Assets/Prefabs/Menu%20Panel.prefab) and [`script`](./Assets/MRMotifs/Shared%20Assets/Scripts/MenuPanel.cs), which holds a list of all the other scenes and which displays scene controls for each scene. The menu panel can be toggled by using the menu (start) button/gesture using hands and controllers. The menu panels are hidden in the Shared Activities scenes by default to not interfere with the object of interest.
@@ -152,8 +153,6 @@ The [`MRMotifsHome`](./Assets/MRMotifs/MRMotifsHome.unity) scene now includes "[
 
 The **chess sample** scene updates chess piece positions and rotations like the **[`AvatarMovementHandlerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Avatars/AvatarMovementHandlerMotif.cs)**. The **[`ChessBoardHandlerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Chess%20Sample/ChessBoardHandlerMotif.cs)** assigns State Authority to players moving pieces and syncs their networked transforms. It toggles Rigidbody between physics (for the authority) and kinematic (for others). Using Photon Fusion's **IStateAuthorityChanged** interface, it waits for authority transfer before allowing movement. The board has four spawn points, which can be increased by adding more and assigning the **[`SpawnPointMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Spawning/SpawnPointMotif.cs)** class.
 
-![Spawn Locations](./Media/Motif2/SpawnLocations.png)
-
 The **movie cowatching** logic in **[`MovieControlsHandlerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Movie%20Sample/MovieControlsHandlerMotif.cs)** differs from the previous sample, as it synchronizes UI elements (button/toggle states) instead of transforms. It uses Networked Properties like `NetworkBools` and `NetworkedFloats` to track slider values and toggle states. The `IStateAuthorityChanged` interface ensures actions are executed by the correct player. Currently, there are 4 spawn locations set in front of the chess board.
 
 ## Multiplayer setup & troubleshooting
@@ -179,13 +178,11 @@ This MR Motif's [scripts folder](./Assets/MRMotifs/SharedActivities/Scripts/) is
   - **[`GroupPresenceAndInviteHandlerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Quest%20Platform/GroupPresenceAndInviteHandlerMotif.cs)**: Manages [group presence](https://developers.meta.com/horizon/documentation/unity/ps-group-presence-overview) and [friend invitations](https://developers.meta.com/horizon/documentation/unity/ps-invite-overview) using the Oculus Platform SDK. It allows users to set their session as joinable with specific destination and session IDs, and provides functionality to launch the invite panel so users can invite friends to join their multiplayer session.
   - **[`InvitationAcceptanceHandlerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Quest%20Platform/InvitationAcceptanceHandlerMotif.cs)**: Manages [deep link invitations](https://developers.meta.com/horizon/documentation/unity/ps-deep-linking/) using the Oculus Platform SDK. When the app is launched via a deep link (e.g., from a friend's invitation), it checks the launch details to map the provided destination API name to a scene and automatically loads that scene, directing the user to the appropriate multiplayer session.
 
-  ![Chess Testing](./Media/Motif2/InvitePanel.gif)
-
 - **Spawning**
   - **[`SpawnManagerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs)**: Manages player spawn locations. It controls a queuing system for players waiting for available spawn points, ensuring avatars are correctly positioned at these locations, and prevents conflicts by assigning unique spawn positions to each player as they join the session.
   - **[`SpawnPointMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Spawning/SpawnPointMotif.cs)**: Serves as a marker component in the scene to designate player spawn points. It is used by the [`SpawnManagerMotif`](./Assets/MRMotifs/SharedActivities/Scripts/Spawning/SpawnManagerMotif.cs) to identify and manage these spawn locations but contains no additional logic beyond being attached to GameObjects as an identifier.
 
-## Instant Content Placement & Depth effects
+# Instant Content Placement & Depth effects
 
 [![Video Thumbnail](./Media/Motif3/InstantContentPlacement.png)](https://www.youtube.com/watch?v=VEdtonM5pGs)
 
@@ -193,13 +190,13 @@ Read through the [**Developer Documentation**](https://developers.meta.com/horiz
 
 Version 71 of the Meta XR Core SDK introduced the **[MRUK Raycast API](https://developers.meta.com/horizon/documentation/unity/unity-mr-utility-kit-features#environment-raycasting-beta)** in public beta. It is designed for applications that want to place a 2D panel or 3D object somewhere in front of the user with minimal setup and effort required. This can be helpful when placing a board game on a table or sticking a UI panel to a wall, for example. The requirements for this placement are minimal: The user should simply look in the direction of the placement. This enables the users to put on a headset in a room they’ve never been to before, and immediately start interacting with both 2D and 3D content.
 
-### Additional Requirements
+## Additional Requirements
 
 - [**Meta MR Utility Kit**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450) (`74.0.0`) - com.meta.xr.mrutilitykit
 > [!TIP]
 > This sample runs with OpenXR. Simplz makes sure that, alongside the **OpenXR plugin**, you also install the Unity **OpenXR Meta plugin** (`com.unity.xr.meta-openxr@2.1.0-pre.1`). This is necessary for using the Depth API.
 
-### How it works
+## How it works
 
 To place an object in a room, there is no need for colliders at all, instead the new [`EnvironmentRaycastManager`](https://developers.meta.com/horizon/documentation/unity/unity-mr-utility-kit-features#environment-raycasting-beta) is utilized, which heavily relies on the `EnvironmentDepthManager`. The basic concept of placing an object using the EnvironmentRaycastManager looks like the following:
 
@@ -232,25 +229,152 @@ To place an object in a room, there is no need for colliders at all, instead the
 
    The important part here is the `EnvironmentRaycastManager.Raycast` method. It performs a raycast against the environment and returns a hit result with information such as the hit point, normal of the surface hit, and normal confidence. This is already all the information needed to detect a surface and place any object on that surface. The Raycast API, part of MRUK, is as easy to work with as Unity’s [`Physics.Raycast`](https://docs.unity3d.com/ScriptReference/Physics.Raycast.html), which most Unity developers will already be familiar with.
 
-### Sample Scenes
+## Sample Scenes
 
 Two samples scene come with this MR Motif. The `Depth Effects` scene shows off various visual effects that can be achieved by utilizing the information coming form the EnvironmentDepthManager directly in the shaders. The Instant Content Placement scene demonstrates how to use Raycasting to detetct and place surfaces. The project also contains a separate shader to render a shadow below the object and cut it off whenever it extends a surface, such as a table, just like a real shadow.
 |                        Depth Effects                           |                   Instant Content Placement                     |
 | :----------------------------------------------------------:   | :----------------------------------------------------------:    |
 |          ![Orb Shockwave](./Media/Motif3/OrbWave.gif)          |     ![Grounding Shadow](./Media/Motif3/GroundingShadow.gif)     |
 
-### Custom Shaders
+## Custom Shaders
 
 This MR Motif includes several sample shaders designed to assist developers in quickly creating custom occlusion shaders. For example, the [`DepthLookingGlassMotif`](./Assets/MRMotifs/InstantContentPlacement/Shaders/DepthLookingGlassMotif.shader) shader visualizes depth maps on objects such as quads, displaying both physical and virtual object depth to enhance gameplay interactions. To visualize virtual objects accurately, ensure they use opaque shaders, as transparent objects do not write to Unity's depth buffer. To achieve invisible objects that still affect depth, the [`DepthMaskMotif`](./Assets/MRMotifs/InstantContentPlacement/Shaders/DepthMaskMotif.shader) shader can be applied. Additionally, for virtual depth visualization, depth textures must be enabled in the camera's rendering settings or the Universal Render Pipeline asset.
 
-![Looking Glass](./Media/Motif3/LookingGlass.gif)
-
 The Depth Effects scene demonstrates two additional visual effects. The [`DepthRelightingMotif`](./Assets/MRMotifs/InstantContentPlacement/Shaders/DepthRelightingMotif.shader) shader applies a glow or lighting effect directly to the depth map, shown by the blue glow of the orb moving through the environment. The [`DepthScanEffectMotif`](./Assets/MRMotifs/InstantContentPlacement/Shaders/DepthScanEffectMotif.shader) shader is applied to an invisible sphere, expanding over time and coloring intersections with the depth map to produce a shockwave effect. The image below illustrates the ShaderGraph implementation of the Orb, providing an example of how occlusion can be integrated into existing shaders. Additional details are available in the [`Depth API GitHub repository`](https://github.com/oculus-samples/Unity-DepthAPI).
-
-![Shadergraph Orb](./Media/Motif3/ShaderGraph_Orb.png)
 
 Lastly, the project contains the [`GroundingShadowMotif`](./Assets/MRMotifs/InstantContentPlacement/Shaders/GroundingShadowMotif.shader) shader which displays a shadow texture and is able to compare virtual and physical depth, to discard the pixels of the texture, wherever the shadow extends over a surface, such as a table.
 
+# Colocated Experiences
+
+[![Video Thumbnail](./Media/Motif4/ColacatedExperiences.png)](#)
+
+Read through the [**Developer Documentation**](https://developers.meta.com/horizon/documentation/unity/unity-mrmotifs-colocated-experiences) for additional information!
+
+Version 71 of the Meta XR Core SDK introduced the [Group-based anchor loading](https://developers.meta.com/horizon/documentation/unity/unity-shared-spatial-anchors#understanding-group-based-vs-user-based-spatial-anchor-sharing-and-loading), as well as [Colocation Discovery](https://developers.meta.com/horizon/documentation/unity/unity-colocation-discovery). Followed by v74, which introduced the powerful [MRUK Space Sharing API](https://developers.meta.com/horizon/documentation/unity/space-sharing-overview). This MR Motif will demonstrate everything, from the very basics of [Spatial Anchors](https://developers.meta.com/horizon/documentation/unity/unity-spatial-anchors-persist-content), through how to share them over the network, to how to set up co-located experiences using [Colocation Discovery](https://developers.meta.com/horizon/documentation/unity/unity-colocation-discovery). Furthermore, the project includes a guide on how to set up the new [MRUK Space Sharing API](https://developers.meta.com/horizon/documentation/unity/space-sharing-overview), allowing developers to build colocated apps where all participants can leverage detailed information about their physical surroundings with MRUK. The project also contains the new [Microgestures](https://developers.meta.com/horizon/documentation/unity/unity-microgestures), allowing users to interact with the shared Whiteboard sample in the project, using controllers and hands equally.
+
+## Additional Requirements
+
+- [**Meta MR Utility Kit**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450) (`74.0.0`) - com.meta.xr.mrutilitykit
+- [**Meta XR Platform SDK**](https://assetstore.unity.com/packages/tools/integration/meta-xr-platform-sdk-262366) (`74.0.0`) - com.meta.xr.sdk.platform
+- [**Photon Fusion**](https://assetstore.unity.com/packages/tools/network/photon-fusion-267958) (`2.0.5`)
+
+## Spatial Anchors
+An anchor is a world-locked frame of reference that gives a position and orientation to a virtual object in the real world. In this MR Motif, we demonstrate the whole lifecycle of a spatial anchor, from its creation to its persistence and retrieval. The project provides a [`Spatial Anchors folder`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Spatial%20Anchors/), containing the [`SpatialAnchorManager`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Spatial%20Anchors/SpatialAnchorManager.cs) class for creating, saving, and erasing spatial anchors, the [`SpatialAnchorLoader`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Spatial%20Anchors/SpatialAnchorLoader.cs) class for loading previously saved anchors, and the static [`SpatialAnchorStorage`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Spatial%20Anchors/SpatialAnchorStorage.cs) class For managing the anchor's UUIDs and saving them to the [`Unity PlayerPrefs`](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/PlayerPrefs.html).
+
+It is best practice to await each action and/or check if the action was successfully completed before continuing. For creation there is not
+`OVRSpatialAnchor` method, instead an anchor can be created by simply instantiating a prefab that contains the OVRSpatialAnchor component, or taking an existing object in the scene and adding the OVRSpatialAnchor component to it. This assigns a UUID and creates the anchor asynchronously.
+
+```
+var anchor = gameObject.AddComponent<OVRSpatialAnchor>();
+
+while (!anchor.Created)
+{
+      await Task.Yield();
+}
+```
+
+The anchor contains a property called Created to check if the creation is already successfully completed. It is good practice to wait until the anchor has been created before continuing.
+
+For other action such as saving, erasing, and loading, the anchor provides methods that return a task that can be awaited.
+
+```
+// Save an anchor
+await anchor.SaveAnchorAsync();
+
+// Load an anchor
+var unboundAnchors = new List<OVRSpatialAnchor.UnboundAnchor>();
+await OVRSpatialAnchor.LoadUnboundAnchorsAsync(uuids, unboundAnchors);
+
+// Localize an anchor
+await unboundAnchor.LocalizeAsync();
+
+// Bind an anchor
+unboundAnchor.BindTo(spatialAnchor);
+
+// Erase an anchor
+await anchor.EraseAnchorAsync();
+Destroy(anchor.gameObject);
+```
+
+## Shared Spatial Acnhors & Colocation Discovery
+
+As of v71, Spatial Anchor sharing and loading is [groups instead of user based](https://developers.meta.com/horizon/documentation/unity/unity-shared-spatial-anchors#understanding-group-based-vs-user-based-spatial-anchor-sharing-and-loading). This eliminates the need for users to be [entitled to the app](https://developers.meta.com/horizon/documentation/unity/ps-entitlement-check) and therefore for developers to manage user IDs through their verified app on the Developer Dashboard. Instead, an arbitrary group UUID is used for sharing and loading anchors, making Group Sharing the recommended approach.
+
+Before sharing a spatial anchor with a group, one of the participants, usually the host, must create a single UUID representing the group and communicate it to the others. The method of that communication can be either via an app-managed network connection, such as [Unity Netcode](https://docs-multiplayer.unity3d.com/netcode/current/about/) or [Photon Fusion](https://www.photonengine.com/fusion), or via [Colocation Discovery](https://developers.meta.com/horizon/documentation/unity/unity-colocation-discovery), which greatly reduces end-user friction around setting up colocated experiences.
+
+The project provides a [`Colocation folder`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Colocation/), containing the [`SharedSpatialAnchorManager`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Colocation/SharedSpatialAnchorManager.cs) class for managing the colocation process, from Colocation Advertisement and Discovery over Sharing and Loading anchors. Furthermore it contains the [`ColocationManager`](./Assets/MRMotifs/ColocatedExperiences/Scripts/Colocation/ColocationManager.cs) class, responsible for aligning the user to the tracking space of the host.
+
+### Colocation Discovery: Advertisement & Anchor Sharing
+
+The group ID is automatically generated as the result of advertising. In the code below, the host starts the advertisement. After successful advertisement we can read the group ID from the advertisement result.
+
+```
+var advertisementResult = await OVRColocationSession.StartAdvertisementAsync(null);
+_groupId = advertisementResult.Value;
+
+// Create and save anchor here
+```
+
+After creating and saving our spatial anchor as we learned in the previous section, we are then able to call the group-based function for sharing anchors.
+
+```
+OVRSpatialAnchor.ShareAsync(new List<OVRSpatialAnchor> { anchor }, _groupId);
+```
+
+### Colocation Discovery: Discovery & Anchor Loading
+
+After the host has started advertising the session and has successfully shared the anchor, including the created group ID, all other users are ready to discover the session. Below you can see that we subscribe to the OnColocationSessionDiscovered event and then start the Discovery with StartDiscoveryAsync.
+
+```
+OVRColocationSession.ColocationSessionDiscovered += OnColocationSessionDiscovered;
+OVRColocationSession.StartDiscoveryAsync();
+```
+
+```
+private void OnColocationSessionDiscovered(OVRColocationSession.Data sessionData)
+{
+    _groupId = session.AdvertisementUuid;
+    var unboundAnchors = new List<OVRSpatialAnchor.UnboundAnchor>();
+    await OVRSpatialAnchor.LoadUnboundSharedAnchorsAsync(_groupId, unboundAnchors);
+}
+```
+
+Next, the users are ready to be aligned to the anchor’s pose. This is necessary for a truly colocated experience and so that the users have the same tracking space as the host. To do this we can simply adjust the position and rotation of the user's Camera Rig to the anchor’s pose.
+
+```
+cameraRig.Transform.position = anchor.Transform.InverseTransformPoint(Vector3.zero);
+cameraRig.Transform.eulerAngles = new Vector3(0, -anchor.Transform.eulerAngles.y, 0);
+```
+
+## Space Sharing
+
+ A popular use case when doing colocation is to also share the room layout with other users. With version 74 of the Meta XR SDK we did introduce just that. MRUK now hosts a powerful [Space Sharing API](https://developers.meta.com/horizon/documentation/unity/space-sharing-overview), making it extremely easy and seamless to share rooms across clients in a co-located experience. All requirements and a troubleshooting guide can be found in the [**Developer Documentation**](https://developers.meta.com/horizon/documentation/unity/unity-mrmotifs-instant-content-placement).
+
+ This MR Motif combines the Space Sharing API with Colocation Discovery, which makes this whole setup extremely straightforward. To share a room, all the host has to do is to talk to the MRUK singleton instance, get a list of MRUK rooms, and call the built-in ShareRoomsAsync method.
+
+```
+// For sharing multiple rooms
+var rooms = MRUK.Instance.Rooms;
+MRUK.Instance.ShareRoomsAsync(rooms, _groupId);
+
+// For sharing a single (current) room
+var room = MRUK.Instance.GetCurrentRoom();
+room.ShareRoomAsync(_groupId);
+```
+
+Similarly it is possible for the other users to load all rooms shared with the group ID and align themselves to the room’s floor world pose.
+
+```
+MRUK.Instance.LoadSceneFromSharedRooms(null, _groupId, alignmentData: (roomUuid, remoteFloorWorldPose));
+```
+
+## Sample Scenes
+
+This project contains two additional sample scenes for [Colocation Discovery](./Assets/MRMotifs/ColocatedExperiences/Scenes/ColocationDiscovery.unity), as well as [Space Sharing](./Assets/MRMotifs/ColocatedExperiences/Scenes/SpaceSharing.unity), which demonstrate how to build a seamless colocated experience.
+
+|                        Shared Whiteboard                       |                   Shared Bouncing Ball Spawner              |
+| :----------------------------------------------------------:   | :------------------------------------------------------:    |
+|   ![Colocation](./Media/Motif4/ColocationDiscovery.gif)        |      ![Space Sharing](./Media/Motif4/SpaceSharing.gif)      |
 
 # Health and safety guidelines
 
