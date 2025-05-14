@@ -2,6 +2,7 @@
 
 #if FUSION2
 using System.Collections;
+using Fusion;
 using Meta.XR.Samples;
 using UnityEngine;
 
@@ -9,11 +10,12 @@ namespace MRMotifs.ColocatedExperiences.Whiteboard
 {
     [MetaCodeSample("MRMotifs-ColocatedExperiences")]
     [RequireComponent(typeof(PointerHandlerMotif))]
-    public class PointerDrawingMotif : MonoBehaviour
+    public class PointerDrawingMotif : NetworkBehaviour
     {
         [SerializeField] private Color penColor = Color.blue;
         [SerializeField] private int brushRadius = 6;
 
+        private bool m_isReady;
         private bool m_leftDrawing;
         private bool m_rightDrawing;
         private Vector2 m_leftLastUV;
@@ -21,19 +23,27 @@ namespace MRMotifs.ColocatedExperiences.Whiteboard
         private PointerHandlerMotif m_pointerHandlerMotif;
         private WhiteboardManagerMotif m_whiteboardManagerMotif;
 
-        private void Awake()
+        public override void Spawned()
         {
-            m_pointerHandlerMotif = FindAnyObjectByType<PointerHandlerMotif>();
+            base.Spawned();
+            m_pointerHandlerMotif = GetComponent<PointerHandlerMotif>();
+            StartCoroutine(WaitForManager());
+            m_isReady = true;
         }
 
-        private IEnumerator Start()
+        private IEnumerator WaitForManager()
         {
-            yield return new WaitUntil(() => WhiteboardManagerMotif.Instance != null);
+            yield return new WaitUntil(() => WhiteboardManagerMotif.Instance);
             m_whiteboardManagerMotif = WhiteboardManagerMotif.Instance;
         }
 
         private void Update()
         {
+            if (!m_isReady)
+            {
+                return;
+            }
+            
             if (!m_pointerHandlerMotif || !m_whiteboardManagerMotif || !InteractionStateManagerMotif.Instance)
             {
                 return;
@@ -88,6 +98,7 @@ namespace MRMotifs.ColocatedExperiences.Whiteboard
 
             if (inputDown && InteractionStateManagerMotif.Instance.CanDrawWithPointer())
             {
+                Object.RequestStateAuthority();
                 InteractionStateManagerMotif.Instance.SetMode(mode);
                 isDrawing = true;
                 lastUV = m_whiteboardManagerMotif.WorldToUV(hitPoint);
@@ -95,6 +106,7 @@ namespace MRMotifs.ColocatedExperiences.Whiteboard
             }
             else if (inputHeld && isDrawing)
             {
+                Object.RequestStateAuthority();
                 var currentUV = m_whiteboardManagerMotif.WorldToUV(hitPoint);
                 if (!(Vector2.Distance(lastUV, currentUV) > 0.001f))
                 {

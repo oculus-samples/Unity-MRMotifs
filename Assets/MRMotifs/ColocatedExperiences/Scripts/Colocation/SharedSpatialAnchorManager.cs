@@ -3,11 +3,10 @@
 #if FUSION2
 using Fusion;
 using System;
-using System.Text;
 using UnityEngine;
+using Meta.XR.Samples;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Meta.XR.Samples;
 
 namespace MRMotifs.ColocatedExperiences.Colocation
 {
@@ -24,7 +23,7 @@ namespace MRMotifs.ColocatedExperiences.Colocation
             PrepareColocation();
         }
 
-        public void PrepareColocation()
+        private void PrepareColocation()
         {
             if (Object.HasStateAuthority)
             {
@@ -40,47 +39,35 @@ namespace MRMotifs.ColocatedExperiences.Colocation
 
         private async void AdvertiseColocationSession()
         {
-            try
-            {
-                var advertisementData = Encoding.UTF8.GetBytes("SharedSpatialAnchorSession");
-                var startAdvertisementResult = await OVRColocationSession.StartAdvertisementAsync(advertisementData);
+            // Optional advertisement data, e.g. the name of the session or a message to other clients (max. size: 1024 bytes).
+            // We can also leave it empty with "null".
+            // var colocationSessionData = Encoding.UTF8.GetBytes("SharedSpatialAnchorSession");
+            var startAdvertisementResult = await OVRColocationSession.StartAdvertisementAsync(null);
 
-                if (startAdvertisementResult.Success)
-                {
-                    m_sharedAnchorGroupId = startAdvertisementResult.Value;
-                    Debug.Log($"Motif: Advertisement started successfully. UUID: {m_sharedAnchorGroupId}");
-                    CreateAndShareAlignmentAnchor();
-                }
-                else
-                {
-                    Debug.LogError($"Motif: Advertisement failed with status: {startAdvertisementResult.Status}");
-                }
-            }
-            catch (Exception e)
+            if (startAdvertisementResult.Success)
             {
-                Debug.LogError($"Motif: Error during advertisement: {e.Message}");
+                m_sharedAnchorGroupId = startAdvertisementResult.Value;
+                Debug.Log($"Motif: Advertisement started successfully. UUID: {m_sharedAnchorGroupId}");
+                CreateAndShareAlignmentAnchor();
+            }
+            else
+            {
+                Debug.LogError($"Motif: Advertisement failed with status: {startAdvertisementResult.Status}");
             }
         }
 
         private async void DiscoverNearbySession()
         {
-            try
-            {
-                OVRColocationSession.ColocationSessionDiscovered += OnColocationSessionDiscovered;
+            OVRColocationSession.ColocationSessionDiscovered += OnColocationSessionDiscovered;
 
-                var discoveryResult = await OVRColocationSession.StartDiscoveryAsync();
-                if (!discoveryResult.Success)
-                {
-                    Debug.LogError($"Motif: Discovery failed with status: {discoveryResult.Status}");
-                    return;
-                }
-
-                Debug.Log("Motif: Discovery started successfully.");
-            }
-            catch (Exception e)
+            var discoveryResult = await OVRColocationSession.StartDiscoveryAsync();
+            if (!discoveryResult.Success)
             {
-                Debug.LogError($"Motif: Error during discovery: {e.Message}");
+                Debug.LogError($"Motif: Discovery failed with status: {discoveryResult.Status}");
+                return;
             }
+
+            Debug.Log("Motif: Discovery started successfully.");
         }
 
         private void OnColocationSessionDiscovered(OVRColocationSession.Data session)
@@ -94,112 +81,85 @@ namespace MRMotifs.ColocatedExperiences.Colocation
 
         private async void CreateAndShareAlignmentAnchor()
         {
-            try
+            Debug.Log("Motif: Creating alignment anchor...");
+            var anchor = await CreateAnchor(Vector3.zero, Quaternion.identity);
+
+            if (anchor == null)
             {
-                Debug.Log("Motif: Creating alignment anchor...");
-                var anchor = await CreateAnchor(Vector3.zero, Quaternion.identity);
-
-                if (anchor == null)
-                {
-                    Debug.LogError("Motif: Failed to create alignment anchor.");
-                    return;
-                }
-
-                if (!anchor.Localized)
-                {
-                    Debug.LogError("Motif: Anchor is not localized. Cannot proceed with sharing.");
-                    return;
-                }
-
-                var saveResult = await anchor.SaveAnchorAsync();
-                if (!saveResult.Success)
-                {
-                    Debug.LogError($"Motif: Failed to save alignment anchor. Error: {saveResult}");
-                    return;
-                }
-
-                Debug.Log($"Motif: Alignment anchor saved successfully. UUID: {anchor.Uuid}");
-                Debug.Log("Motif: Attempting to share alignment anchor...");
-                var shareResult =
-                    await OVRSpatialAnchor.ShareAsync(new List<OVRSpatialAnchor> { anchor }, m_sharedAnchorGroupId);
-
-                if (!shareResult.Success)
-                {
-                    Debug.LogError($"Motif: Failed to share alignment anchor. Error: {shareResult}");
-                    return;
-                }
-
-                Debug.Log($"Motif: Alignment anchor shared successfully. Group UUID: {m_sharedAnchorGroupId}");
+                Debug.LogError("Motif: Failed to create alignment anchor.");
+                return;
             }
-            catch (Exception e)
+
+            if (!anchor.Localized)
             {
-                Debug.LogError($"Motif: Error during anchor creation and sharing: {e.Message}");
+                Debug.LogError("Motif: Anchor is not localized. Cannot proceed with sharing.");
+                return;
             }
+
+            var saveResult = await anchor.SaveAnchorAsync();
+            if (!saveResult.Success)
+            {
+                Debug.LogError($"Motif: Failed to save alignment anchor. Error: {saveResult}");
+                return;
+            }
+
+            Debug.Log($"Motif: Alignment anchor saved successfully. UUID: {anchor.Uuid}");
+            Debug.Log("Motif: Attempting to share alignment anchor...");
+            var shareResult = await OVRSpatialAnchor.ShareAsync(new List<OVRSpatialAnchor> { anchor }, m_sharedAnchorGroupId);
+
+            if (!shareResult.Success)
+            {
+                Debug.LogError($"Motif: Failed to share alignment anchor. Error: {shareResult}");
+                return;
+            }
+
+            Debug.Log($"Motif: Alignment anchor shared successfully. Group UUID: {m_sharedAnchorGroupId}");
         }
 
         private async Task<OVRSpatialAnchor> CreateAnchor(Vector3 position, Quaternion rotation)
         {
-            try
+            var anchorGameObject = new GameObject("Motif: Alignment Anchor")
             {
-                var anchorGameObject = new GameObject("Motif: Alignment Anchor")
-                {
-                    transform =
-                    {
-                        position = position,
-                        rotation = rotation
-                    }
-                };
+                transform = { position = position, rotation = rotation }
+            };
 
-                var spatialAnchor = anchorGameObject.AddComponent<OVRSpatialAnchor>();
-                while (!spatialAnchor.Created)
-                {
-                    await Task.Yield();
-                }
-
-                Debug.Log($"Motif: Anchor created successfully. UUID: {spatialAnchor.Uuid}");
-                return spatialAnchor;
-            }
-            catch (Exception e)
+            var spatialAnchor = anchorGameObject.AddComponent<OVRSpatialAnchor>();
+            while (!spatialAnchor.Created)
             {
-                Debug.LogError($"Motif: Error during anchor creation: {e.Message}");
-                return null;
+                await Task.Yield();
             }
+
+            Debug.Log($"Motif: Anchor created successfully. UUID: {spatialAnchor.Uuid}");
+            return spatialAnchor;
         }
 
         private async void LoadAndAlignToAnchor(Guid groupUuid)
         {
-            try
-            {
-                Debug.Log($"Motif: Loading anchors for Group UUID: {groupUuid}...");
-                var unboundAnchors = new List<OVRSpatialAnchor.UnboundAnchor>();
-                var loadResult = await OVRSpatialAnchor.LoadUnboundSharedAnchorsAsync(groupUuid, unboundAnchors);
+            Debug.Log($"Motif: Loading anchors for Group UUID: {groupUuid}...");
+            var unboundAnchors = new List<OVRSpatialAnchor.UnboundAnchor>();
+            var loadResult = await OVRSpatialAnchor.LoadUnboundSharedAnchorsAsync(groupUuid, unboundAnchors);
 
-                if (!loadResult.Success || unboundAnchors.Count == 0)
+            if (!loadResult.Success || unboundAnchors.Count == 0)
+            {
+                Debug.LogError($"Motif: Failed to load anchors. Success: {loadResult.Success}, Count: {unboundAnchors.Count}");
+                return;
+            }
+
+            foreach (var unboundAnchor in unboundAnchors)
+            {
+                if (await unboundAnchor.LocalizeAsync())
                 {
-                    Debug.LogError(
-                        $"Motif: Failed to load anchors. Success: {loadResult.Success}, Count: {unboundAnchors.Count}");
+                    Debug.Log($"Motif: Anchor localized successfully. UUID: {unboundAnchor.Uuid}");
+
+                    var anchorGameObject = new GameObject($"Anchor_{unboundAnchor.Uuid}");
+                    var spatialAnchor = anchorGameObject.AddComponent<OVRSpatialAnchor>();
+                    unboundAnchor.BindTo(spatialAnchor);
+
+                    m_colocationManager.AlignUserToAnchor(spatialAnchor);
                     return;
                 }
 
-                foreach (var unboundAnchor in unboundAnchors)
-                {
-                    if (await unboundAnchor.LocalizeAsync())
-                    {
-                        Debug.Log($"Motif: Anchor localized successfully. UUID: {unboundAnchor.Uuid}");
-
-                        var anchorGameObject = new GameObject($"Anchor_{unboundAnchor.Uuid}");
-                        var spatialAnchor = anchorGameObject.AddComponent<OVRSpatialAnchor>();
-                        unboundAnchor.BindTo(spatialAnchor);
-
-                        m_colocationManager.AlignUserToAnchor(spatialAnchor);
-                        return;
-                    }
-                    Debug.LogWarning($"Motif: Failed to localize anchor: {unboundAnchor.Uuid}");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Motif: Error during anchor loading and alignment: {e.Message}");
+                Debug.LogWarning($"Motif: Failed to localize anchor: {unboundAnchor.Uuid}");
             }
         }
     }

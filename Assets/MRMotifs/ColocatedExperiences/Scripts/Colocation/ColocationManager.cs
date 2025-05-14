@@ -9,14 +9,11 @@ namespace MRMotifs.ColocatedExperiences.Colocation
     [MetaCodeSample("MRMotifs-ColocatedExperiences")]
     public class ColocationManager : MonoBehaviour
     {
-        [SerializeField] private SharedSpatialAnchorManager sharedSpatialAnchorManager;
-
         private Transform m_cameraRigTransform;
 
-        private void Start()
+        private void Awake()
         {
             m_cameraRigTransform = FindAnyObjectByType<OVRCameraRig>().transform;
-            sharedSpatialAnchorManager.PrepareColocation();
         }
 
         /// <summary>

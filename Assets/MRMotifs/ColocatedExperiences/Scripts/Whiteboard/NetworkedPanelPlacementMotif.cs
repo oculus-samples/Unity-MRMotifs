@@ -116,7 +116,6 @@ namespace MRMotifs.ColocatedExperiences.Whiteboard
 
                 if (OVRInput.GetUp(m_activeGrabButton))
                 {
-                    Object.ReleaseStateAuthority();
                     EndGrabbing();
                 }
             }
@@ -227,7 +226,6 @@ namespace MRMotifs.ColocatedExperiences.Whiteboard
                             BeginGrabbing(anchor, grabButton, axis, fromMicroGesture: true);
                             break;
                         case true:
-                            Object.ReleaseStateAuthority();
                             EndGrabbing();
                             break;
                     }
