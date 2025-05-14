@@ -14,30 +14,18 @@ namespace MRMotifs.ColocatedExperiences.Colocation
     [MetaCodeSample("MRMotifs-ColocatedExperiences")]
     public class SharedSpatialAnchorManager : NetworkBehaviour
     {
-        [SerializeField] private ColocationManager colocationManager;
-
-        private Guid _sharedAnchorGroupId;
-        private bool _hasSpawned;
+        private ColocationManager m_colocationManager;
+        private Guid m_sharedAnchorGroupId;
 
         public override void Spawned()
         {
             base.Spawned();
-            _hasSpawned = true;
+            m_colocationManager = FindAnyObjectByType<ColocationManager>();
+            PrepareColocation();
         }
 
-        public async void PrepareColocation()
+        public void PrepareColocation()
         {
-            if (!_hasSpawned)
-            {
-                Debug.Log("Motif: Waiting for SharedSpatialAnchorManager to spawn...");
-                while (!_hasSpawned)
-                {
-                    await Task.Yield();
-                }
-
-                Debug.Log("Motif: SharedSpatialAnchorManager has spawned, proceeding...");
-            }
-
             if (Object.HasStateAuthority)
             {
                 Debug.Log("Motif: Starting advertisement...");
@@ -59,8 +47,8 @@ namespace MRMotifs.ColocatedExperiences.Colocation
 
                 if (startAdvertisementResult.Success)
                 {
-                    _sharedAnchorGroupId = startAdvertisementResult.Value;
-                    Debug.Log($"Motif: Advertisement started successfully. UUID: {_sharedAnchorGroupId}");
+                    m_sharedAnchorGroupId = startAdvertisementResult.Value;
+                    Debug.Log($"Motif: Advertisement started successfully. UUID: {m_sharedAnchorGroupId}");
                     CreateAndShareAlignmentAnchor();
                 }
                 else
@@ -99,9 +87,9 @@ namespace MRMotifs.ColocatedExperiences.Colocation
         {
             OVRColocationSession.ColocationSessionDiscovered -= OnColocationSessionDiscovered;
 
-            _sharedAnchorGroupId = session.AdvertisementUuid;
-            Debug.Log($"Motif: Discovered session with UUID: {_sharedAnchorGroupId}");
-            LoadAndAlignToAnchor(_sharedAnchorGroupId);
+            m_sharedAnchorGroupId = session.AdvertisementUuid;
+            Debug.Log($"Motif: Discovered session with UUID: {m_sharedAnchorGroupId}");
+            LoadAndAlignToAnchor(m_sharedAnchorGroupId);
         }
 
         private async void CreateAndShareAlignmentAnchor()
@@ -133,7 +121,7 @@ namespace MRMotifs.ColocatedExperiences.Colocation
                 Debug.Log($"Motif: Alignment anchor saved successfully. UUID: {anchor.Uuid}");
                 Debug.Log("Motif: Attempting to share alignment anchor...");
                 var shareResult =
-                    await OVRSpatialAnchor.ShareAsync(new List<OVRSpatialAnchor> { anchor }, _sharedAnchorGroupId);
+                    await OVRSpatialAnchor.ShareAsync(new List<OVRSpatialAnchor> { anchor }, m_sharedAnchorGroupId);
 
                 if (!shareResult.Success)
                 {
@@ -141,7 +129,7 @@ namespace MRMotifs.ColocatedExperiences.Colocation
                     return;
                 }
 
-                Debug.Log($"Motif: Alignment anchor shared successfully. Group UUID: {_sharedAnchorGroupId}");
+                Debug.Log($"Motif: Alignment anchor shared successfully. Group UUID: {m_sharedAnchorGroupId}");
             }
             catch (Exception e)
             {
@@ -203,7 +191,7 @@ namespace MRMotifs.ColocatedExperiences.Colocation
                         var spatialAnchor = anchorGameObject.AddComponent<OVRSpatialAnchor>();
                         unboundAnchor.BindTo(spatialAnchor);
 
-                        colocationManager.AlignUserToAnchor(spatialAnchor);
+                        m_colocationManager.AlignUserToAnchor(spatialAnchor);
                         return;
                     }
                     Debug.LogWarning($"Motif: Failed to localize anchor: {unboundAnchor.Uuid}");
