@@ -1,7 +1,6 @@
 #if FUSION2
 using System;
 using System.Linq;
-using System.Text;
 using Fusion;
 using UnityEngine;
 using Meta.XR.MRUtilityKit;
@@ -19,6 +18,7 @@ namespace MRMotifs.ColocatedExperiences.SpaceSharing
 
         public override void Spawned()
         {
+            base.Spawned();
             PrepareColocation();
         }
 
@@ -36,8 +36,7 @@ namespace MRMotifs.ColocatedExperiences.SpaceSharing
 
         private async void AdvertiseColocationSession()
         {
-            var advertisementData = Encoding.UTF8.GetBytes("MRUKRoomSharing");
-            var result = await OVRColocationSession.StartAdvertisementAsync(advertisementData);
+            var result = await OVRColocationSession.StartAdvertisementAsync(null);
 
             if (!result.Success)
             {
@@ -59,12 +58,6 @@ namespace MRMotifs.ColocatedExperiences.SpaceSharing
         private async void ShareMrukRooms()
         {
             var rooms = MRUK.Instance.Rooms;
-            if (rooms.Count == 0)
-            {
-                Debug.LogError("Motif: [Host] No local MRUK rooms found to share.");
-                return;
-            }
-
             print($"Motif: [Host] Sharing MRUK rooms: {string.Join(", ", rooms.Select(r => r.Anchor.Uuid))}");
             var result = await MRUK.Instance.ShareRoomsAsync(rooms, m_sharedAnchorGroupId);
 
@@ -80,8 +73,7 @@ namespace MRMotifs.ColocatedExperiences.SpaceSharing
 
             var room0 = rooms[0];
             var pose = room0.FloorAnchor.transform;
-            NetworkedRemoteFloorPose =
-                $"{pose.position.x},{pose.position.y},{pose.position.z},{pose.rotation.x},{pose.rotation.y},{pose.rotation.z},{pose.rotation.w}";
+            NetworkedRemoteFloorPose = $"{pose.position.x},{pose.position.y},{pose.position.z},{pose.rotation.x},{pose.rotation.y},{pose.rotation.z},{pose.rotation.w}";
             print($"Motif: [Host] Set NetworkedRemoteFloorPose = {NetworkedRemoteFloorPose}");
         }
 
@@ -125,10 +117,7 @@ namespace MRMotifs.ColocatedExperiences.SpaceSharing
         }
 
         /// <summary>
-        /// This method loads the rooms previously shared with the user via MRUK.Instance.ShareRoomsAsync.
-        /// If you previously shared only the current room via MRUKRoom.ShareRoomAsync, then you can use
-        /// the following method with a different overload, which does not require the all the roomUuids:
-        /// LoadSceneFromSharedRooms(null, groupUuid, (currentRoomUuid, remoteFloorWorldPose));
+        /// This method loads the rooms previously shared with the user.
         /// </summary>
         private async void LoadSharedRoom(Guid groupUuid)
         {
@@ -142,15 +131,8 @@ namespace MRMotifs.ColocatedExperiences.SpaceSharing
             }
 
             var remotePoseStr = NetworkedRemoteFloorPose.ToString();
-            if (string.IsNullOrEmpty(remotePoseStr))
-            {
-                Debug.LogError("Motif: [Client] No remote floor world pose received.");
-                return;
-            }
-
             var remoteFloorWorldPose = ParsePose(remotePoseStr);
-            var result = await MRUK.Instance.LoadSceneFromSharedRooms(
-                roomUuids, groupUuid, (roomUuids[0], remoteFloorWorldPose));
+            var result = await MRUK.Instance.LoadSceneFromSharedRooms(roomUuids, groupUuid, (roomUuids[0], remoteFloorWorldPose));
 
             if (result == MRUK.LoadDeviceResult.Success)
             {

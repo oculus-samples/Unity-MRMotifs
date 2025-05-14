@@ -479,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5456522116536683071, guid: 37c47f9928e3fef4bb9a9ffaafab5526, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1234,6 +1234,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 79479770}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1201825508
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 85144892463319288, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: SortKey
+      value: 3048004321
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005157412939641706, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589894875121611954, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 623495773}
+    - target: {fileID: 5175381020273685947, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
+      propertyPath: m_Name
+      value: '[MR Motif] Ball Spawner Sample'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3718e5684c17ff499b3480ed6b354a7, type: 3}
 --- !u!1 &1300658547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,7 +2051,8 @@ SceneRoots:
   - {fileID: 24999895}
   - {fileID: 1423645214}
   - {fileID: 201200901}
-  - {fileID: 1817393010}
   - {fileID: 1129523918}
   - {fileID: 543538846}
+  - {fileID: 1201825508}
   - {fileID: 372154816}
+  - {fileID: 1817393010}
