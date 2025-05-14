@@ -90,7 +90,7 @@ namespace MRMotifs.SharedActivities.QuestPlatform
                     }
                     else
                     {
-                        Debug.Log("Group presence successfully set for the Chess scene!");
+                        Debug.Log($"Group presence successfully set up for {destinationApiName}!");
                     }
                 });
         }

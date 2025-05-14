@@ -32,6 +32,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MRMotifs/InstantContentPlacement/Scenes/InstantContentPlacement.unity
     guid: 94e5d96fe23133a4c88c19940426946a
+  - enabled: 1
+    path: Assets/MRMotifs/ColocatedExperiences/Scenes/SpatialAnchorsBasics.unity
+    guid: c717f30a9df1ed74f96f4fdcd678d8a3
+  - enabled: 1
+    path: Assets/MRMotifs/ColocatedExperiences/Scenes/ColocationDiscovery.unity
+    guid: 8af2ff9af8f94714195ca51d1fe9c1d2
+  - enabled: 1
+    path: Assets/MRMotifs/ColocatedExperiences/Scenes/SpaceSharing.unity
+    guid: 8ac054682feb6084ba041d9e909a8a15
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 76cb85526c074c8458be822a82877922, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 164d77ef9199b154685194b5e1feab47, type: 2}
