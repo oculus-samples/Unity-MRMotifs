@@ -1,3 +1,5 @@
+// Copyright (c) Meta Platforms, Inc. and affiliates.
+
 #if FUSION2
 using System;
 using System.Linq;
