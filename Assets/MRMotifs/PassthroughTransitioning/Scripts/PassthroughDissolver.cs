@@ -4,6 +4,7 @@ using Meta.XR.Samples;
 using MRMotifs.SharedAssets;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace MRMotifs.PassthroughTransitioning
 {
@@ -26,6 +27,13 @@ namespace MRMotifs.PassthroughTransitioning
 
         private static readonly int s_dissolutionLevel = Shader.PropertyToID("_Level");
 
+        // Debug loop settings for coroutine-based looping
+        [Header("Debug Loop Settings")]
+        [SerializeField]
+        private float m_loopSpeed = 1f;
+        private float m_loopTime = 0f;
+        private Coroutine m_dissolveCoroutine;
+
         private void Awake()
         {
             m_mainCamera = Camera.main;
@@ -34,8 +42,7 @@ namespace MRMotifs.PassthroughTransitioning
                 m_mainCamera.clearFlags = CameraClearFlags.Skybox;
             }
 
-            // This is a property that determines whether premultiplied alpha blending is used for the eye field of view
-            // layer, which can be adjusted to enhance the blending with underlays and potentially improve visual quality.
+            // Determines whether premultiplied alpha blending is used for the eye field of view layer.
             OVRManager.eyeFovPremultipliedAlphaModeEnabled = false;
 
             m_meshRenderer = GetComponent<MeshRenderer>();
@@ -73,12 +80,13 @@ namespace MRMotifs.PassthroughTransitioning
 
         private void CheckIfPassthroughIsRecommended()
         {
-            m_material.SetFloat(s_dissolutionLevel, OVRManager.IsPassthroughRecommended() ? 1 : 0);
-            OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = OVRManager.IsPassthroughRecommended();
+            bool recommended = OVRManager.IsPassthroughRecommended();
+            m_material.SetFloat(s_dissolutionLevel, recommended ? 1f : 0f);
+            OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = recommended;
 
             if (m_menuPanel != null)
             {
-                m_alphaSlider.value = OVRManager.IsPassthroughRecommended() ? 1 : 0;
+                m_alphaSlider.value = recommended ? 1f : 0f;
             }
         }
 
@@ -86,9 +94,59 @@ namespace MRMotifs.PassthroughTransitioning
         {
             m_material.SetFloat(s_dissolutionLevel, value);
 
+            // Update boundary visibility based on the slider value.
             if (value > boundaryThreshold || value < boundaryThreshold)
             {
                 OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = value > boundaryThreshold;
+            }
+        }
+
+        // The coroutine method for the dissolve loop.
+        private IEnumerator DissolveRoutine()
+        {
+            m_loopTime = 0f;
+            while (true)
+            {
+                m_loopTime += Time.deltaTime * m_loopSpeed;
+                float lerpValue = Mathf.PingPong(m_loopTime, 1f);
+                m_material.SetFloat(s_dissolutionLevel, lerpValue);
+
+                if (m_alphaSlider != null)
+                {
+                    m_alphaSlider.SetValueWithoutNotify(lerpValue);
+                }
+
+                OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = lerpValue > boundaryThreshold;
+                yield return null;
+            }
+        }
+
+        // This method starts the dissolve loop.
+        [ContextMenu("Start Dissolve Loop")]
+        public void StartDissolveLoop()
+        {
+            if (m_dissolveCoroutine == null)
+            {
+                m_dissolveCoroutine = StartCoroutine(DissolveRoutine());
+            }
+        }
+
+        // This method stops the dissolve loop.
+        [ContextMenu("Stop Dissolve Loop")]
+        public void StopDissolveLoop()
+        {
+            if (m_dissolveCoroutine != null)
+            {
+                StopCoroutine(m_dissolveCoroutine);
+                m_dissolveCoroutine = null;
+
+                // Optionally reset the effect to its default state.
+                m_material.SetFloat(s_dissolutionLevel, 0f);
+                if (m_alphaSlider != null)
+                {
+                    m_alphaSlider.SetValueWithoutNotify(0f);
+                }
+                OVRManager.instance.shouldBoundaryVisibilityBeSuppressed = false;
             }
         }
     }
