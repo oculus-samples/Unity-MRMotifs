@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BlendedSkybox
-  m_Shader: {fileID: 4800000, guid: dc9dd5fdc37688642b06df27915b0fbe, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4789cb4ed5fa93344a26989bef2be4bd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SkyboxB:
-        m_Texture: {fileID: 8900000, guid: 398d45dd355ac2e46a5ec3eb09809157, type: 3}
+        m_Texture: {fileID: 8900000, guid: c5c3322fc6cd9e0418658519a1730941, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
