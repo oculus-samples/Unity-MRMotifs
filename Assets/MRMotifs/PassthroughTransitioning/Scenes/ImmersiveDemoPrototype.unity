@@ -3263,9 +3263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a0767e50de24641af30c7ae4850a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.3
+  duration: 0.5
   useOvershoot: 1
-  overshootMultiplier: 1.05
+  overshootMultiplier: 1.1
 --- !u!114 &1087759361 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7912748986139658617, guid: 2cdb9b231103a784e80ea496b6c3fb04, type: 3}
