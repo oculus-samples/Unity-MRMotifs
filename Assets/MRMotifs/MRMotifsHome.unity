@@ -2869,6 +2869,8 @@ MonoBehaviour:
   apiToSceneMappings:
   - apiName: mrmotif_chess
     sceneName: Chess
+  - apiName: mrmotif_movie
+    sceneName: MovieCowatching
   - apiName: mrmotif_colocationDiscovery
     sceneName: ColocationDiscovery
   - apiName: mrmotif_spaceSharing
